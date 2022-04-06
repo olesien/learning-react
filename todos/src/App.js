@@ -52,9 +52,10 @@ const App = () => {
                 </div>
             </form>
             <div className="d-flex flex-row justify-content-center">
-                <div className="finished-todos p-2">
-                    <h3>Finished todos</h3>
-                    {todos.length > 0 ? (
+                {todos.filter((todo) => todo.completed).length > 0 ? (
+                    <div className="finished-todos p-2">
+                        <h3>Finished todos</h3>
+
                         <ul className="list-group">
                             {todos
                                 .filter((todo) => todo.completed)
@@ -90,13 +91,14 @@ const App = () => {
                                     </li>
                                 ))}
                         </ul>
-                    ) : (
-                        <p>Wee no more todos!</p>
-                    )}
-                </div>
-                <div className="unfinished-todos p-2">
-                    <h3>unfinished todos</h3>
-                    {todos.length > 0 ? (
+                    </div>
+                ) : (
+                    <p>No finished todos :(!</p>
+                )}
+
+                {todos.filter((todo) => !todo.completed).length > 0 ? (
+                    <div className="unfinished-todos p-2">
+                        <h3>unfinished todos</h3>
                         <ul className="list-group">
                             {todos
                                 .filter((todo) => !todo.completed)
@@ -132,10 +134,10 @@ const App = () => {
                                     </li>
                                 ))}
                         </ul>
-                    ) : (
-                        <p>Wee no more todos!</p>
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <p>Currently no unfinished todos :)!</p>
+                )}
             </div>
         </div>
     );
