@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 
 const App = () => {
@@ -7,6 +7,9 @@ const App = () => {
         { title: "JSX Rocks Even Moar 🤘🏻!", completed: true },
         { title: "Got State?", completed: false },
     ]);
+
+    const [finishedTodos, setFinishedTodos] = useState([]);
+    const [unFinishedTodos, setUnFinishedTodos] = useState([]);
 
     // const addLike = (post) => {
     //     console.log(post);
@@ -28,9 +31,22 @@ const App = () => {
         setTodos([...todos]);
     };
 
-    const finishedTodos = todos.filter((todo) => todo.completed);
+    useEffect(() => {
+        console.log("i'm rendering a side effect");
+        //exeucted on each one!
 
-    const unFinishedTodos = todos.filter((todo) => !todo.completed);
+        setFinishedTodos(todos.filter((todo) => todo.completed));
+
+        setUnFinishedTodos(todos.filter((todo) => !todo.completed));
+    }, [todos]);
+
+    useEffect(() => {
+        document.title = unFinishedTodos.length + " / " + finishedTodos.length;
+    }, [finishedTodos, unFinishedTodos]);
+
+    useEffect(() => {
+        console.log("First run");
+    }, []);
 
     return (
         <div className="App container">
