@@ -3,33 +3,43 @@ import TodoListItem from "./components/TodoListItem";
 import "./App.css";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import TodosAPI from "./services/TodosAPI";
 
 const App = () => {
-    const [todos, setTodos] = useState([
-        { title: "Make coffee", completed: true },
-        { title: "Drink coffee", completed: false },
-        { title: "Drink MOAR coffee", completed: false },
-        { title: "Drink ALL THE coffee", completed: false },
-    ]);
+    const [todos, setTodos] = useState([]);
     const [unfinishedTodos, setUnfinishedTodos] = useState([]);
     const [finishedTodos, setFinishedTodos] = useState([]);
 
-    const toggleTodo = (todo) => {
-        todo.completed = !todo.completed;
-        setTodos([...todos]);
+    const getTodos = async () => {
+        const data = await TodosAPI.getTodos();
+        setTodos(data);
+        console.log(data);
     };
 
-    const deleteTodo = (clickedTodo) => {
-        setTodos(todos.filter((todo) => todo !== clickedTodo));
+    const toggleTodo = async (todo) => {
+        const patchedTodo = await TodosAPI.updateTodo(todo.id, {
+            completed: !todo.completed,
+        });
+
+        getTodos();
     };
 
-    const setNewTodos = (newTodos) => {
-        setTodos([...todos, newTodos]);
+    const deleteTodo = async (clickedTodo) => {
+        const deletedTodo = await TodosAPI.deleteTodo(clickedTodo.id);
+        //console.log(deletedTodo);
+        getTodos();
+    };
+
+    const setNewTodos = async (newTodos) => {
+        const todo = await TodosAPI.createTodo(newTodos);
+        setTodos([...todos, todo]);
     };
 
     // This will only be executed when the component is mounted,
     // and only AFTER the component has been rendered
     useEffect(() => {
+        //get todos
+        getTodos();
         console.log("I'm a newly mounted component 👶🏽");
     }, []);
 

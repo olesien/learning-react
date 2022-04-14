@@ -1,5 +1,19 @@
 {
-    "posts": [{ "id": 1, "title": "json-server", "author": "typicode" }],
-    "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
-    "profile": { "name": "typicode" }
+  "todos": [
+    {
+      "id": 1,
+      "title": "Make coffee",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "Make more coffee",
+      "completed": true
+    },
+    {
+      "title": "reeeeee",
+      "completed": true,
+      "id": 3
+    }
+  ]
 }
