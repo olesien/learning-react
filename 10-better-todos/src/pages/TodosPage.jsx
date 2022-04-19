@@ -3,11 +3,8 @@ import AddNewTodoForm from "../components/AddNewTodoForm";
 import AlertInfo from "../components/AlertInfo";
 import TodoList from "../components/TodoList";
 import TodosAPI from "../services/TodosAPI";
-import Container from "react-bootstrap/Container";
-import "bootstrap/dist/css/bootstrap.css";
-import "../App.css";
 
-const App = () => {
+const TodosPage = () => {
     const [todos, setTodos] = useState([]);
     const [unfinishedTodos, setUnfinishedTodos] = useState([]);
     const [finishedTodos, setFinishedTodos] = useState([]);
@@ -58,7 +55,7 @@ const App = () => {
     }, [finishedTodos, todos]);
 
     return (
-        <Container className="App">
+        <>
             <h1>React Simple Todos</h1>
 
             <div className="mb-3">
@@ -113,8 +110,8 @@ const App = () => {
                     </AlertInfo>
                 </>
             )}
-        </Container>
+        </>
     );
 };
 
-export default App;
+export default TodosPage;
