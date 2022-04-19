@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AddNewTodoForm from "../components/AddNewTodoForm";
+
 import AlertInfo from "../components/AlertInfo";
 import TodoList from "../components/TodoList";
 import TodosAPI from "../services/TodosAPI";
@@ -13,12 +13,6 @@ const TodosPage = () => {
     const getTodos = async () => {
         const data = await TodosAPI.getTodos();
         setTodos(data);
-    };
-
-    // Create a new todo in the api
-    const createTodo = async (newTodo) => {
-        await TodosAPI.createTodo(newTodo);
-        getTodos();
     };
 
     // Delete a todo in the api
@@ -57,10 +51,6 @@ const TodosPage = () => {
     return (
         <>
             <h1>React Simple Todos</h1>
-
-            <div className="mb-3">
-                <AddNewTodoForm onAddNewTodo={createTodo} />
-            </div>
 
             {todos.length > 0 && (
                 <>

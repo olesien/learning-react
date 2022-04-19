@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const TodoListItem = ({ todo, onTitleClick, onDelete }) => {
-	return (
-		<li className={todo.completed ? 'done' : ''}>
-			<span
+    return (
+        <li className={todo.completed ? "done" : ""}>
+            {/* <span
 				className="todo-title"
 				onClick={() => onTitleClick(todo)}
 			>
@@ -11,9 +13,12 @@ const TodoListItem = ({ todo, onTitleClick, onDelete }) => {
 			<span
 				className="todo-delete"
 				onClick={() => onDelete(todo)}
-			>🗑</span>
-		</li>
-	)
-}
+			>🗑</span> */}
+            <Link className="todo-title" to={`/todos/${todo.id}`}>
+                {todo.title}
+            </Link>
+        </li>
+    );
+};
 
-export default TodoListItem
+export default TodoListItem;
