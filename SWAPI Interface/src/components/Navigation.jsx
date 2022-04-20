@@ -14,7 +14,7 @@ export default function Navigation() {
                     <Nav.Link as={NavLink} to="/films">
                         Films
                     </Nav.Link>
-                    <Nav.Link as={NavLink} to="/people">
+                    <Nav.Link as={NavLink} to="/peoples">
                         People
                     </Nav.Link>
                 </Nav>

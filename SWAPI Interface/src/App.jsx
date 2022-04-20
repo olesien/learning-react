@@ -5,6 +5,8 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 
 import Films from "./pages/Films";
+import Film from "./pages/Film";
+import Peoples from "./pages/Peoples";
 import People from "./pages/People";
 
 const App = () => {
@@ -15,8 +17,9 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<p>Welcome home</p>} />
                     <Route path="/films" element={<Films />} />
-                    {/* <Route path="/todos/:id" element={<TodoPage />} /> */}
-                    <Route path="/people" element={<People />} />
+                    <Route path="/film/:id" element={<Film />} />
+                    <Route path="/peoples" element={<Peoples />} />
+                    <Route path="/people/:id" element={<People />} />
                 </Routes>
             </Container>
         </>

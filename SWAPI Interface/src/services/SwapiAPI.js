@@ -8,8 +8,13 @@ const BASE_URL = "https://swapi.dev/api/";
 /**
  * Get all todos
  */
-const getPeople = async () => {
+const getPeoples = async () => {
     const res = await axios.get(`${BASE_URL}/people`);
+    return res.data;
+};
+
+const getFilms = async () => {
+    const res = await axios.get(`${BASE_URL}/films`);
     return res.data;
 };
 
@@ -54,5 +59,6 @@ const getPeople = async () => {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    getPeople,
+    getPeoples,
+    getFilms,
 };
