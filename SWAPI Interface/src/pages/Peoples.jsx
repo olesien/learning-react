@@ -6,19 +6,54 @@ import SwapiAPI from "../services/SwapiAPI";
 
 import ListItems from "../components/ListItems";
 
+import Search from "../components/Search";
+
+import { Navigate, useSearchParams } from "react-router-dom";
+import e from "express";
+
 export default function Peoples() {
     const [peoples, setPeoples] = useState();
+    const [loading, setLoading] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    let page = searchParams.get("page");
+    let search = searchParams.get("search");
 
     // Get todos from api
     const getPeoples = async () => {
+        setLoading(true);
         console.log("making req");
-        const data = await SwapiAPI.getPeoples();
+        let data;
+        if (page) {
+            data = await SwapiAPI.getPeoples(page);
+        } else {
+            //It's a search!
+            data = await SwapiAPI.searchPeoples(search);
+        }
+
         console.log(data);
         setPeoples(data);
+        setLoading(false);
     };
 
     // Get todos from api when component is first mounted
+
+    const changePage = async (newUrl, newPage) => {
+        setLoading(true);
+        setSearchParams({ page: newPage });
+        const data = await SwapiAPI.changePage(newUrl);
+        setPeoples(data);
+        setLoading(false);
+    };
+
+    const makeSearch = async (newSearch) => {
+        setSearchParams({ search: newSearch });
+    };
+
     useEffect(() => {
+        if (!page && !search) {
+            setSearchParams({ page: 1 });
+        }
         getPeoples();
     }, []);
 
@@ -66,8 +101,14 @@ export default function Peoples() {
                     <Card.Link href="#">Another Link</Card.Link>
                 </Card.Body>
             </Card> */}
+            <Search makeSearch={makeSearch} />
             <ListItems data={peoples} type="Peoples" />
-            <PaginationBar data={peoples} />
+            <PaginationBar
+                data={peoples}
+                page={page}
+                changePage={changePage}
+                loading={loading}
+            />
         </>
     );
 }

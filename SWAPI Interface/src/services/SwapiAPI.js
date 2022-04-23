@@ -8,13 +8,29 @@ const BASE_URL = "https://swapi.dev/api/";
 /**
  * Get all todos
  */
-const getPeoples = async () => {
-    const res = await axios.get(`${BASE_URL}/people`);
+const getPeoples = async (page) => {
+    if (!page) {
+        page = 1;
+    }
+    const res = await axios.get(`${BASE_URL}/people/?page=${page}`);
     return res.data;
 };
 
-const getFilms = async () => {
-    const res = await axios.get(`${BASE_URL}/films`);
+const searchPeoples = async (search) => {
+    const res = await axios.get(`${BASE_URL}/people/?search=${search}`);
+    return res.data;
+};
+
+const getFilms = async (page) => {
+    if (!page) {
+        page = 1;
+    }
+    const res = await axios.get(`${BASE_URL}/films/?page=${page}`);
+    return res.data;
+};
+
+const changePage = async (newUrl) => {
+    const res = await axios.get(newUrl);
     return res.data;
 };
 
@@ -60,5 +76,7 @@ const getFilms = async () => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getPeoples,
+    searchPeoples,
     getFilms,
+    changePage,
 };
