@@ -9,7 +9,6 @@ import ListItems from "../components/ListItems";
 import Search from "../components/Search";
 
 import { Navigate, useSearchParams } from "react-router-dom";
-import e from "express";
 
 export default function Peoples() {
     const [peoples, setPeoples] = useState();
@@ -23,14 +22,7 @@ export default function Peoples() {
     const getPeoples = async () => {
         setLoading(true);
         console.log("making req");
-        let data;
-        if (page) {
-            data = await SwapiAPI.getPeoples(page);
-        } else {
-            //It's a search!
-            data = await SwapiAPI.searchPeoples(search);
-        }
-
+        const data = await SwapiAPI.getPeoples(page);
         console.log(data);
         setPeoples(data);
         setLoading(false);
@@ -47,7 +39,7 @@ export default function Peoples() {
     };
 
     const makeSearch = async (newSearch) => {
-        setSearchParams({ search: newSearch });
+        alert(newSearch);
     };
 
     useEffect(() => {
