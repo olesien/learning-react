@@ -23,7 +23,7 @@ export default function Item({ item, type }) {
                         {type === "Films" ? (
                             <>
                                 <ListGroupItem>
-                                    <strong>Episoder:</strong> {item.episode_id}
+                                    <strong>Episode:</strong> {item.episode_id}
                                 </ListGroupItem>
                                 <ListGroupItem>
                                     <strong>Released</strong>{" "}
