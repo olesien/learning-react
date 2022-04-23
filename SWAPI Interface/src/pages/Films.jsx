@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 import PaginationBar from "../components/PaginationBar";
 import SwapiAPI from "../services/SwapiAPI";
 
 import ListItems from "../components/ListItems";
 
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Search from "../components/Search";
 
 export default function Films() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     let page = searchParams.get("page");
+    let search = searchParams.get("search");
     const [films, setFilms] = useState();
     const [loading, setLoading] = useState(false);
 
-    // Get todos from api
-    const getFilms = async () => {
+    // Get films
+    const getFilms = async (newSearch = null, emptySearch = false) => {
         setLoading(true);
-        const data = await SwapiAPI.getFilms(page);
+        console.log("making req");
+        let data;
+        if ((emptySearch || !search) && !newSearch) {
+            data = await SwapiAPI.getFilms(page);
+        } else {
+            //It's a search!
+            data = await SwapiAPI.searchFilms(newSearch ? newSearch : search);
+        }
         console.log(data);
         setFilms(data);
         setLoading(false);
@@ -34,7 +40,13 @@ export default function Films() {
     };
 
     const makeSearch = async (newSearch) => {
-        alert(newSearch);
+        if (newSearch.length > 1) {
+            setSearchParams({ search: newSearch });
+            getFilms(newSearch);
+        } else {
+            setSearchParams({ page: 1 });
+            getFilms(null, true);
+        }
     };
 
     // Get todos from api when component is first mounted

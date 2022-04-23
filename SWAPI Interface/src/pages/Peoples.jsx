@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
 import PaginationBar from "../components/PaginationBar";
 import SwapiAPI from "../services/SwapiAPI";
 
@@ -8,7 +7,7 @@ import ListItems from "../components/ListItems";
 
 import Search from "../components/Search";
 
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function Peoples() {
     const [peoples, setPeoples] = useState();
@@ -18,17 +17,21 @@ export default function Peoples() {
     let page = searchParams.get("page");
     let search = searchParams.get("search");
 
-    // Get todos from api
-    const getPeoples = async () => {
+    // Get searches
+    const getPeoples = async (newSearch = null, emptySearch = false) => {
         setLoading(true);
         console.log("making req");
-        const data = await SwapiAPI.getPeoples(page);
+        let data;
+        if ((emptySearch || !search) && !newSearch) {
+            data = await SwapiAPI.getPeoples(page);
+        } else {
+            //It's a search!
+            data = await SwapiAPI.searchPeoples(newSearch ? newSearch : search);
+        }
         console.log(data);
         setPeoples(data);
         setLoading(false);
     };
-
-    // Get todos from api when component is first mounted
 
     const changePage = async (newUrl, newPage) => {
         setLoading(true);
@@ -39,7 +42,13 @@ export default function Peoples() {
     };
 
     const makeSearch = async (newSearch) => {
-        alert(newSearch);
+        if (newSearch.length > 1) {
+            setSearchParams({ search: newSearch });
+            getPeoples(newSearch);
+        } else {
+            setSearchParams({ page: 1 });
+            getPeoples(null, true);
+        }
     };
 
     useEffect(() => {
@@ -74,25 +83,6 @@ export default function Peoples() {
     return (
         <>
             <h2>Peoples</h2>
-            {/* <Card style={{ width: "18rem" }}>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </Card.Text>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>Cras justo odio</ListGroupItem>
-                    <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                    <ListGroupItem>Vestibulum at eros</ListGroupItem>
-                </ListGroup>
-                <Card.Body>
-                    <Card.Link href="#">Card Link</Card.Link>
-                    <Card.Link href="#">Another Link</Card.Link>
-                </Card.Body>
-            </Card> */}
             <Search makeSearch={makeSearch} />
             <ListItems data={peoples} type="Peoples" />
             <PaginationBar

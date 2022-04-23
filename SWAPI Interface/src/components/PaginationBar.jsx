@@ -39,7 +39,7 @@ export default function PaginationBar({ data, changePage, page, loading }) {
                         Previous Page
                     </Button>
                     <p style={{ justifySelf: "center" }}>
-                        Page {page} / {Math.ceil(data.count / 10)}
+                        Page {page ? page : 1} / {Math.ceil(data.count / 10)}
                     </p>
                     <Button
                         style={{ justifySelf: "end" }}

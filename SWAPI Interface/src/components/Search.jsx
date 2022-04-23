@@ -5,7 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 
 export default function Search({ makeSearch }) {
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
 
     const changeSearch = (e) => {
         setSearch(e.target.value);

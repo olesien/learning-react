@@ -16,11 +16,21 @@ const getPeoples = async (page) => {
     return res.data;
 };
 
+const searchPeoples = async (search) => {
+    const res = await axios.get(`${BASE_URL}/people/?search=${search}`);
+    return res.data;
+};
+
 const getFilms = async (page) => {
     if (!page) {
         page = 1;
     }
     const res = await axios.get(`${BASE_URL}/films/?page=${page}`);
+    return res.data;
+};
+
+const searchFilms = async (search) => {
+    const res = await axios.get(`${BASE_URL}/films/?search=${search}`);
     return res.data;
 };
 
@@ -71,6 +81,8 @@ const changePage = async (newUrl) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getPeoples,
+    searchPeoples,
     getFilms,
+    searchFilms,
     changePage,
 };
