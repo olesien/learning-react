@@ -6,29 +6,9 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 
-{
-    /* <ListGroupItem>
-<strong>Gender:</strong> male
-</ListGroupItem>
-<ListGroupItem>
-<strong>Born:</strong> 19BBY
-</ListGroupItem>
-<ListGroupItem>
-<strong>In:</strong> 4 films
-</ListGroupItem> */
-}
+import { Link } from "react-router-dom";
 
-{
-    /* <ListGroupItem>
-<strong>Episoder:</strong> 4
-</ListGroupItem>
-<ListGroupItem>
-<strong>Released</strong> 1977-05-25
-</ListGroupItem>
-<ListGroupItem>
-18 <strong>characters</strong>
-</ListGroupItem> */
-}
+import { getIdFromUrl } from "../funcs";
 
 export default function Item({ item, type }) {
     console.log(type);
@@ -69,7 +49,14 @@ export default function Item({ item, type }) {
                             </>
                         )}
                     </ListGroup>
-                    <Button style={{ marginTop: "1rem" }} variant="primary">
+                    <Button
+                        as={Link}
+                        style={{ marginTop: "1rem" }}
+                        variant="primary"
+                        to={`/${
+                            type === "Films" ? "film" : "people"
+                        }/${getIdFromUrl(item.url)}`}
+                    >
                         Read More
                     </Button>
                 </Card.Body>
