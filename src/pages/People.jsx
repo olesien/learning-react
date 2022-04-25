@@ -11,13 +11,14 @@ import RenderList from "../components/RenderList";
 export default function People() {
     const [people, setPeople] = useState();
     const { id } = useParams();
-    const getPeople = async () => {
-        const data = await SwapiAPI.getPeople(id);
-        setPeople(data);
-    };
+
     useEffect(() => {
+        const getPeople = async () => {
+            const data = await SwapiAPI.getPeople(id);
+            setPeople(data);
+        };
         getPeople();
-    }, []);
+    }, [id]);
     return (
         <Container style={{ marginTop: "10px" }}>
             {people ? (

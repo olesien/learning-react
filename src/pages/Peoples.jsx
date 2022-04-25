@@ -17,22 +17,6 @@ export default function Peoples() {
     let page = searchParams.get("page");
     let search = searchParams.get("search");
 
-    // Get searches
-    const getPeoples = async (newSearch = null, emptySearch = false) => {
-        setLoading(true);
-        console.log("making req");
-        let data;
-        if ((emptySearch || !search) && !newSearch) {
-            data = await SwapiAPI.getPeoples(page);
-        } else {
-            //It's a search!
-            data = await SwapiAPI.searchPeoples(newSearch ? newSearch : search);
-        }
-        console.log(data);
-        setPeoples(data);
-        setLoading(false);
-    };
-
     const changePage = async (newUrl, newPage) => {
         setLoading(true);
         setSearchParams({ page: newPage });
@@ -44,19 +28,34 @@ export default function Peoples() {
     const makeSearch = async (newSearch) => {
         if (newSearch.length > 1) {
             setSearchParams({ search: newSearch });
-            getPeoples(newSearch);
         } else {
             setSearchParams({ page: 1 });
-            getPeoples(null, true);
         }
     };
 
+    // Get the characters on reload or new page/search
     useEffect(() => {
+        // Get searches
+        const getPeoples = async () => {
+            setLoading(true);
+            console.log("making req");
+            let data;
+            if (!search) {
+                data = await SwapiAPI.getPeoples(page);
+            } else {
+                //It's a search!
+                data = await SwapiAPI.searchPeoples(search);
+            }
+            console.log(data);
+            setPeoples(data);
+            setLoading(false);
+        };
+
         if (!page && !search) {
             setSearchParams({ page: 1 });
         }
         getPeoples();
-    }, []);
+    }, [page, setSearchParams, search]);
 
     // count: 82
     // next: "https://swapi.dev/api/people/?page=2"
@@ -84,7 +83,7 @@ export default function Peoples() {
         <>
             <h2>Peoples</h2>
             <Search makeSearch={makeSearch} />
-            <ListItems data={peoples} type="Peoples" />
+            <ListItems data={peoples} type="Peoples" loading={loading} />
             <PaginationBar
                 data={peoples}
                 page={page}

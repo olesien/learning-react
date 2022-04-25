@@ -11,13 +11,13 @@ import RenderList from "../components/RenderList";
 export default function Film() {
     const [film, setFilm] = useState();
     const { id } = useParams();
-    const getFilm = async () => {
-        const data = await SwapiAPI.getFilm(id);
-        setFilm(data);
-    };
     useEffect(() => {
+        const getFilm = async () => {
+            const data = await SwapiAPI.getFilm(id);
+            setFilm(data);
+        };
         getFilm();
-    }, []);
+    }, [id]);
     return (
         <Container style={{ marginTop: "10px" }}>
             {film ? (

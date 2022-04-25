@@ -15,22 +15,6 @@ export default function Films() {
     const [films, setFilms] = useState();
     const [loading, setLoading] = useState(false);
 
-    // Get films
-    const getFilms = async (newSearch = null, emptySearch = false) => {
-        setLoading(true);
-        console.log("making req");
-        let data;
-        if ((emptySearch || !search) && !newSearch) {
-            data = await SwapiAPI.getFilms(page);
-        } else {
-            //It's a search!
-            data = await SwapiAPI.searchFilms(newSearch ? newSearch : search);
-        }
-        console.log(data);
-        setFilms(data);
-        setLoading(false);
-    };
-
     const changePage = async (newUrl, newPage) => {
         setLoading(true);
         setSearchParams({ page: newPage });
@@ -42,25 +26,39 @@ export default function Films() {
     const makeSearch = async (newSearch) => {
         if (newSearch.length > 1) {
             setSearchParams({ search: newSearch });
-            getFilms(newSearch);
         } else {
             setSearchParams({ page: 1 });
-            getFilms(null, true);
         }
     };
 
-    // Get todos from api when component is first mounted
+    // Get the films on reload or new page/search
     useEffect(() => {
-        if (!page) {
+        // Get films
+        const getFilms = async () => {
+            setLoading(true);
+            console.log("making req");
+            let data;
+            if (!search) {
+                data = await SwapiAPI.getFilms(page);
+            } else {
+                //It's a search!
+                data = await SwapiAPI.searchFilms(search);
+            }
+
+            console.log(data);
+            setFilms(data);
+            setLoading(false);
+        };
+        if (!page && !search) {
             setSearchParams({ page: 1 });
         }
         getFilms();
-    }, []);
+    }, [page, setSearchParams, search]);
     return (
         <>
             <h2>Films</h2>
             <Search makeSearch={makeSearch} />
-            <ListItems data={films} type="Films" />
+            <ListItems data={films} type="Films" loading={loading} />
             <PaginationBar
                 data={films}
                 page={page}
