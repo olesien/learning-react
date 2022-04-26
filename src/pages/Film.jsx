@@ -11,6 +11,8 @@ import RenderList from "../components/RenderList";
 export default function Film() {
     const [film, setFilm] = useState();
     const { id } = useParams();
+
+    //Get the film
     useEffect(() => {
         const getFilm = async () => {
             const data = await SwapiAPI.getFilm(id);

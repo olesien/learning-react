@@ -10,21 +10,27 @@ import Search from "../components/Search";
 import { useSearchParams } from "react-router-dom";
 
 export default function Peoples() {
+    //Declare states
     const [peoples, setPeoples] = useState();
     const [loading, setLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
+    //Get query params
     let page = searchParams.get("page");
     let search = searchParams.get("search");
 
+    //Get the new URL and the new PAGE, this will then update the query params along with making a request to SWAPI
     const changePage = async (newUrl, newPage) => {
+        //Enable loading
         setLoading(true);
         setSearchParams({ page: newPage });
         const data = await SwapiAPI.changePage(newUrl);
         setPeoples(data);
+        //Disable loading
         setLoading(false);
     };
 
+    //Make a new search!
     const makeSearch = async (newSearch) => {
         if (newSearch.length > 1) {
             setSearchParams({ search: newSearch });
@@ -55,6 +61,8 @@ export default function Peoples() {
             setSearchParams({ page: 1 });
         }
         getPeoples();
+
+        //This sets all the dependencies. Whenever one of these updates, this function will be reran.
     }, [page, setSearchParams, search]);
 
     // count: 82

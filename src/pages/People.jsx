@@ -12,6 +12,7 @@ export default function People() {
     const [people, setPeople] = useState();
     const { id } = useParams();
 
+    //Get the person
     useEffect(() => {
         const getPeople = async () => {
             const data = await SwapiAPI.getPeople(id);

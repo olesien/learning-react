@@ -8,13 +8,16 @@ import { useSearchParams } from "react-router-dom";
 import Search from "../components/Search";
 
 export default function Films() {
+    //Declare states
     const [searchParams, setSearchParams] = useSearchParams();
-
-    let page = searchParams.get("page");
-    let search = searchParams.get("search");
     const [films, setFilms] = useState();
     const [loading, setLoading] = useState(false);
 
+    //Get query params
+    let page = searchParams.get("page");
+    let search = searchParams.get("search");
+
+    //Get the new URL and the new PAGE, this will then update the query params along with making a request to SWAPI
     const changePage = async (newUrl, newPage) => {
         setLoading(true);
         setSearchParams({ page: newPage });
@@ -23,6 +26,7 @@ export default function Films() {
         setLoading(false);
     };
 
+    //Make a new search!
     const makeSearch = async (newSearch) => {
         if (newSearch.length > 1) {
             setSearchParams({ search: newSearch });
@@ -53,6 +57,8 @@ export default function Films() {
             setSearchParams({ page: 1 });
         }
         getFilms();
+
+        //This sets all the dependencies. Whenever one of these updates, this function will be reran.
     }, [page, setSearchParams, search]);
     return (
         <>
