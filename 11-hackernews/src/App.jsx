@@ -6,10 +6,13 @@ import SearchHackerNews from "./pages/SearchHackerNews";
 import NotFound from "./pages/NotFound";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import { useContext } from "react";
+import { ThemeContext } from "./contexts/ThemeContextProvider";
 
 const App = () => {
+    const { theme } = useContext(ThemeContext);
     return (
-        <div id="App">
+        <div id="App" className={theme === "dark" ? "bg-dark" : "bg-light"}>
             <Navigation />
 
             <Container className="py-3">
