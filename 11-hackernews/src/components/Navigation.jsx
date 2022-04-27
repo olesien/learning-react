@@ -7,14 +7,10 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
 import { useContext, useState, useEffect } from "react";
-import { ThemeContext } from "../contexts/ThemeContextProvider";
+import { useThemeContext } from "../contexts/ThemeContextProvider";
 
 const Navigation = () => {
-    const {
-        theme,
-        toggleTheme,
-        changeTheme: modifyTheme,
-    } = useContext(ThemeContext);
+    const { theme, toggleTheme, changeTheme: modifyTheme } = useThemeContext();
     const [radioValue, setRadioValue] = useState("1");
 
     const radios = [
