@@ -2,16 +2,20 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Link, NavLink } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useThemeContext } from "../contexts/ThemeContextProvider";
 
 const Navigation = () => {
     const { theme, toggleTheme, changeTheme: modifyTheme } = useThemeContext();
-    const [radioValue, setRadioValue] = useState("1");
+    const [radioValue, setRadioValue] = useState("");
+
+    useEffect(() => {
+        const localTheme = theme === "light" ? "1" : "2";
+        setRadioValue(localTheme);
+    }, [theme]);
 
     const radios = [
         { name: "Light", value: "1" },
