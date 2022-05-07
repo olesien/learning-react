@@ -1,35 +1,40 @@
-import { useEffect, useState } from "react";
-import Forecast from "./components/Forecast";
-import SearchCity from "./components/SearchCity";
-import { getCurrentWeather } from "./services/owmapi";
-import "./App.css";
+import { useEffect, useState } from 'react'
+import Forecast from './components/Forecast'
+import SearchCity from './components/SearchCity'
+import { getCurrentWeather } from './services/owmapi'
+import './assets/scss/App.scss'
 
 const App = () => {
-    const [data, setData] = useState({
-        name: "CITY",
-        sys: { country: "COUNTRY" },
-        main: { temp: "TEMP", humidity: "HUMIDITY" },
-        wind: { speed: "WIND_SPEED" },
-    });
-    const changeCity = async (newCity) => {
-        if (newCity.length < 1) {
-            return;
-        }
+	const [location, setLocation] = useState()
+	const [currentWeather, setCurrentWeather] = useState()
 
-        console.log(newCity);
-        const resourceData = await getCurrentWeather(newCity);
+	const handleSearch = (city) => {
+		setLocation(city)
+	}
 
-        // update data state with resource data
-        setData(resourceData);
-        //console.log(resourceData);
-    };
-    return (
-        <div id="app" className="container">
-            <SearchCity changeCity={changeCity} />
+	useEffect(() => {
+		if (!location) {
+			return
+		}
 
-            <Forecast data={data} />
-        </div>
-    );
-};
+		const fetchData = async () => {
+			const data = await getCurrentWeather(location)
+			console.log(data)
+
+			// update currentWeather state with data
+			setCurrentWeather(data)
+		}
+		fetchData()
+
+	}, [location])
+
+	return (
+		<div id="app" className="container">
+			<SearchCity onSearch={handleSearch} />
+
+			{currentWeather && <Forecast data={currentWeather} />}
+		</div>
+	)
+}
 
 export default App;
