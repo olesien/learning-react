@@ -20,6 +20,9 @@ const Navigation = () => {
                         <Nav.Link as={NavLink} end to="/randomdadjoke">
                             Random Dad Joke
                         </Nav.Link>
+                        <Nav.Link as={NavLink} end to="/randomdog">
+                            Random Dog
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
