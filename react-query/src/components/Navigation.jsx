@@ -17,7 +17,10 @@ const Navigation = () => {
                         <Nav.Link as={NavLink} end to="/">
                             Home
                         </Nav.Link>
-                        <Nav.Link as={NavLink} end to="/randomdadjoke">
+                        <Nav.Link as={NavLink} end to="/icanhazdadjoke">
+                            Icanhazdadjoke
+                        </Nav.Link>
+                        <Nav.Link as={NavLink} end to="/random-dad-joke">
                             Random Dad Joke
                         </Nav.Link>
                         <Nav.Link as={NavLink} end to="/randomdog">
