@@ -1,27 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-
-import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
-import { ReactQueryDevtools } from "react-query/devtools";
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false,
-            staleTime: 1000 * 15,
+            staleTime: 1000 * 60, // 15 seconds
         },
     },
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
                 <App />
-                <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </QueryClientProvider>
     </React.StrictMode>
 );

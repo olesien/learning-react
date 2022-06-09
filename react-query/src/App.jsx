@@ -1,24 +1,37 @@
-import { useState } from "react";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import ICanHazDadJoke from "./pages/ICanHazDadJoke";
-import RandomDadJoke from "./pages/RandomDadJoke";
-import RandomDog from "./pages/RandomDog";
-import "./styling/App.scss";
+import Navigation from "./components/Navigation";
+import HomePage from "./pages/HomePage";
+import PageNotFound from "./pages/PageNotFound";
+import ICanHazDadJokePage from "./pages/ICanHazDadJokePage";
+import RandomDadJokePage from "./pages/RandomDadJokePage";
+import RandomDogPage from "./pages/RandomDogPage";
+import "./assets/scss/App.scss";
+import JokePage from "./pages/JokePage";
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
+        <div id="App">
+            <Navigation />
+
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="*" element={<NotFound />} />
-                <Route path="/icanhazdadjoke" element={<ICanHazDadJoke />} />
-                <Route path="/random-dad-joke" element={<RandomDadJoke />} />
-                <Route path="/randomdog" element={<RandomDog />} />
+                <Route path="/" element={<HomePage />} />
+                <Route
+                    path="/i-can-haz-dad-joke"
+                    element={<ICanHazDadJokePage />}
+                />
+                <Route
+                    path="/random-dad-joke"
+                    element={<RandomDadJokePage />}
+                />
+                <Route path="/random-dog" element={<RandomDogPage />} />
+                <Route path="/joke/:type" element={<JokePage />} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
+
+            <ReactQueryDevtools position="bottom-right" />
         </div>
     );
-}
+};
 
 export default App;
