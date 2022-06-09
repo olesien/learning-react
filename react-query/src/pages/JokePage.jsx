@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import ListJoke from "../components/ListJoke";
 import { getJokeByType } from "../services/DadJokesAPI";
+
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const JokePage = () => {
     const { type } = useParams();
@@ -12,7 +16,7 @@ const JokePage = () => {
         return <p>No</p>;
     }
 
-    const { isLoading, isError, error, data } = useQuery(
+    const { isLoading, isError, isFetching, error, data } = useQuery(
         ["joke", type],
         getJokeByType
     );
@@ -37,13 +41,27 @@ const JokePage = () => {
     console.log(jokeIndex);
 
     console.log(data);
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: red;
+    `;
 
     return (
         <Container className="py-3">
             <h1>Random Dad Joke</h1>
-            <button onClick={updateJokeIndex}>Refresh joke</button>
+            <Button variant="primary" onClick={updateJokeIndex}>
+                Refresh joke
+            </Button>
 
-            {isLoading && <p>Loading joke...</p>}
+            {(isLoading || isFetching) && (
+                <ClipLoader
+                    color={"#5833FF"}
+                    loading={true}
+                    css={override}
+                    size={150}
+                />
+            )}
 
             {isError && <p>An error occurred: {error.message}</p>}
 
