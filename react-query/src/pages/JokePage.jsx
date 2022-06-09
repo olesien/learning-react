@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import { useQuery } from "react-query";
+import { useQuery, useIsFetching } from "react-query";
 import { useParams } from "react-router-dom";
 import ListJoke from "../components/ListJoke";
 import { getJokeByType } from "../services/DadJokesAPI";
@@ -11,12 +11,13 @@ import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const JokePage = () => {
+    const isFetching = useIsFetching();
     const { type } = useParams();
     if (!type) {
         return <p>No</p>;
     }
 
-    const { isLoading, isError, isFetching, error, data } = useQuery(
+    const { isLoading, isError, error, data } = useQuery(
         ["joke", type],
         getJokeByType
     );
