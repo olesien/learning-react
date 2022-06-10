@@ -10,6 +10,7 @@ import "./assets/scss/App.scss";
 import JokePage from "./pages/JokePage";
 
 import RickMortyCharacters from "./pages/rick-morty/Characters";
+import RickMortyCharacter from "./pages/rick-morty/Character";
 
 const App = () => {
     return (
@@ -29,6 +30,10 @@ const App = () => {
                 <Route
                     path="rick-morty/characters"
                     element={<RickMortyCharacters />}
+                />
+                <Route
+                    path="rick-morty/character/:characterId"
+                    element={<RickMortyCharacter />}
                 />
             </Routes>
 

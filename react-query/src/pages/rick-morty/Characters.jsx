@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { useQuery } from "react-query";
 import CharacterCard from "../../components/CharacterCard";
+import Pagination from "../../components/Pagination";
 import { getCharacters } from "../../services/RickMortyAPI";
 
 export default function Characters() {
@@ -35,31 +35,14 @@ export default function Characters() {
 
             {data?.results && (
                 <>
-                    <div className="pagination d-flex justify-content-between align-items-center mt-4 mb-4">
-                        <Button
-                            disabled={isPreviousData || !data.info.prev}
-                            onClick={() =>
-                                setPage((currentPage) => currentPage - 1)
-                            }
-                            variant="primary"
-                        >
-                            Previous Page
-                        </Button>
-
-                        <span>
-                            Page: {page}/{data.info.pages}
-                        </span>
-
-                        <Button
-                            disabled={isPreviousData || !data.info.next}
-                            onClick={() =>
-                                setPage((currentPage) => currentPage + 1)
-                            }
-                            variant="primary"
-                        >
-                            Next Page
-                        </Button>
-                    </div>
+                    <Pagination
+                        page={page}
+                        numPages={data.info.pages}
+                        isPreviousData={isPreviousData}
+                        hasPreviousPage={data.info.prev}
+                        hasNextPage={data.info.next}
+                        onNextPage={setPage}
+                    />
                     <Row>
                         {data.results.map((character) => (
                             <Col lg={3} md={4} sm={6} key={character.id}>

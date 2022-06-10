@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "https://rickandmortyapi.com/api";
-const FAKE_DELAY = 3000;
+const FAKE_DELAY = 10;
 
 const get = async (endpoint) => {
     const response = await axios.get(BASE_URL + endpoint);
@@ -17,6 +17,13 @@ export const getCharacters = ({ queryKey }) => {
     return get(`/character?page=${page}`);
 };
 
+export const getCharacter = ({ queryKey }) => {
+    const [_key, characterId] = queryKey;
+
+    return get(`/character/${characterId}`);
+};
+
 export default {
     getCharacters,
+    getCharacter,
 };
