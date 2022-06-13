@@ -8,41 +8,56 @@ const BASE_URL = "https://swapi.dev/api/";
 /**
  * Get all todos
  */
-const getPeoples = async (page) => {
-    if (!page) {
-        page = 1;
+const getPeoples = async ({ queryKey }) => {
+    const [_key, { page, search }] = queryKey;
+    let pageUrl = "?page=1";
+    if (page) {
+        pageUrl = `?page=${page}`;
     }
-    const res = await axios.get(`${BASE_URL}/people/?page=${page}`);
+    let searchUrl = "";
+    if (search) {
+        searchUrl = `&search=${search}`;
+    }
+    const res = await axios.get(`${BASE_URL}/people/${pageUrl}${searchUrl}`);
     return res.data;
 };
 
-const getPeople = async (id) => {
+const getPeople = async ({ queryKey }) => {
+    const [_key, id] = queryKey;
     const res = await axios.get(`${BASE_URL}/people/${id}`);
     return res.data;
 };
 
-const searchPeoples = async (search) => {
-    const res = await axios.get(`${BASE_URL}/people/?search=${search}`);
-    return res.data;
-};
+// const searchPeoples = async (search) => {
+//     const res = await axios.get(`${BASE_URL}/people/?search=${search}`);
+//     return res.data;
+// };
 
-const getFilms = async (page) => {
-    if (!page) {
-        page = 1;
+const getFilms = async ({ queryKey }) => {
+    const [_key, { page, search }] = queryKey;
+    let pageUrl = "?page=1";
+    if (page) {
+        pageUrl = `?page=${page}`;
     }
-    const res = await axios.get(`${BASE_URL}/films/?page=${page}`);
+
+    let searchUrl = "";
+    if (search) {
+        searchUrl = `&search=${search}`;
+    }
+    const res = await axios.get(`${BASE_URL}/films/${pageUrl}${searchUrl}`);
     return res.data;
 };
 
-const getFilm = async (id) => {
+const getFilm = async ({ queryKey }) => {
+    const [_key, id] = queryKey;
     const res = await axios.get(`${BASE_URL}/films/${id}`);
     return res.data;
 };
 
-const searchFilms = async (search) => {
-    const res = await axios.get(`${BASE_URL}/films/?search=${search}`);
-    return res.data;
-};
+// const searchFilms = async (search) => {
+//     const res = await axios.get(`${BASE_URL}/films/?search=${search}`);
+//     return res.data;
+// };
 
 const changePage = async (newUrl) => {
     const res = await axios.get(newUrl);
@@ -92,9 +107,7 @@ const changePage = async (newUrl) => {
 export default {
     getPeoples,
     getPeople,
-    searchPeoples,
     getFilms,
     getFilm,
-    searchFilms,
     changePage,
 };

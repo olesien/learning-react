@@ -20,6 +20,10 @@ export default function Characters() {
 
     console.log("data", data);
 
+    const nextPage = (newPage) => {
+        setPage(newPage);
+    };
+
     return (
         <Container className="py-3">
             <h1>Rick & Morty Characters</h1>
@@ -41,7 +45,7 @@ export default function Characters() {
                         isPreviousData={isPreviousData}
                         hasPreviousPage={data.info.prev}
                         hasNextPage={data.info.next}
-                        onNextPage={setPage}
+                        onNextPage={nextPage}
                     />
                     <Row>
                         {data.results.map((character) => (

@@ -3,12 +3,16 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
 export default function PaginationBar({ data, changePage, page, loading }) {
+    //Depending on what direction, initiate the changePage function that is ran in Films Or Peoples.
     const navigate = (direction) => {
+        //Not loading
         if (!loading) {
+            //Go back one if possible
             if (data.previous && direction === "back" && page > 0) {
                 changePage(data.previous, Number(page) - 1);
             }
 
+            //Go forward one page if possible
             if (
                 data.next &&
                 direction === "forward" &&

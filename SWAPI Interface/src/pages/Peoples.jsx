@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import PaginationBar from "../components/PaginationBar";
 import SwapiAPI from "../services/SwapiAPI";
 
@@ -9,54 +7,45 @@ import Search from "../components/Search";
 
 import { useSearchParams } from "react-router-dom";
 
+import { useQuery } from "react-query";
+
 export default function Peoples() {
-    const [peoples, setPeoples] = useState();
-    const [loading, setLoading] = useState(false);
+    //Declare states
+    //const [peoples, setPeoples] = useState();
+    //const [loading, setLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
+    //Get query params
     let page = searchParams.get("page");
     let search = searchParams.get("search");
 
-    // Get searches
-    const getPeoples = async (newSearch = null, emptySearch = false) => {
-        setLoading(true);
-        console.log("making req");
-        let data;
-        if ((emptySearch || !search) && !newSearch) {
-            data = await SwapiAPI.getPeoples(page);
-        } else {
-            //It's a search!
-            data = await SwapiAPI.searchPeoples(newSearch ? newSearch : search);
-        }
-        console.log(data);
-        setPeoples(data);
-        setLoading(false);
-    };
+    const {
+        data: peoples,
+        error,
+        isError,
+        isLoading,
+    } = useQuery(["films", { page, search }], SwapiAPI.getPeoples, {
+        keepPreviousData: false,
+    });
 
+    //Get the new URL and the new PAGE, this will then update the query params along with making a request to SWAPI
     const changePage = async (newUrl, newPage) => {
-        setLoading(true);
+        //Enable loading
+        //setLoading(true);
         setSearchParams({ page: newPage });
-        const data = await SwapiAPI.changePage(newUrl);
-        setPeoples(data);
-        setLoading(false);
+        //setPeoples(data);
+        //Disable loading
+        //setLoading(false);
     };
 
+    //Make a new search!
     const makeSearch = async (newSearch) => {
         if (newSearch.length > 1) {
             setSearchParams({ search: newSearch });
-            getPeoples(newSearch);
         } else {
             setSearchParams({ page: 1 });
-            getPeoples(null, true);
         }
     };
-
-    useEffect(() => {
-        if (!page && !search) {
-            setSearchParams({ page: 1 });
-        }
-        getPeoples();
-    }, []);
 
     // count: 82
     // next: "https://swapi.dev/api/people/?page=2"
@@ -84,12 +73,12 @@ export default function Peoples() {
         <>
             <h2>Peoples</h2>
             <Search makeSearch={makeSearch} />
-            <ListItems data={peoples} type="Peoples" />
+            <ListItems data={peoples} type="Peoples" loading={isLoading} />
             <PaginationBar
                 data={peoples}
                 page={page}
                 changePage={changePage}
-                loading={loading}
+                loading={isLoading}
             />
         </>
     );

@@ -12,7 +12,7 @@ export default function Pagination({
         <div className="pagination d-flex justify-content-between align-items-center mt-4 mb-4">
             <Button
                 disabled={isPreviousData || !hasPreviousPage}
-                onClick={() => onNextPage((currentPage) => currentPage - 1)}
+                onClick={() => onNextPage(page - 1)}
                 variant="primary"
             >
                 Previous Page
@@ -24,7 +24,7 @@ export default function Pagination({
 
             <Button
                 disabled={isPreviousData || !hasNextPage}
-                onClick={() => onNextPage((currentPage) => currentPage + 1)}
+                onClick={() => onNextPage(page + 1)}
                 variant="primary"
             >
                 Next Page

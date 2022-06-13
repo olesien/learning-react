@@ -7,65 +7,55 @@ import ListItems from "../components/ListItems";
 import { useSearchParams } from "react-router-dom";
 import Search from "../components/Search";
 
-export default function Films() {
-    const [searchParams, setSearchParams] = useSearchParams();
+import { useQuery } from "react-query";
 
+export default function Films() {
+    //Declare states
+    const [searchParams, setSearchParams] = useSearchParams();
+    //const [films, setFilms] = useState();
+    //const [loading, setLoading] = useState(false);
+
+    //Get query params
     let page = searchParams.get("page");
     let search = searchParams.get("search");
-    const [films, setFilms] = useState();
-    const [loading, setLoading] = useState(false);
 
-    // Get films
-    const getFilms = async (newSearch = null, emptySearch = false) => {
-        setLoading(true);
-        console.log("making req");
-        let data;
-        if ((emptySearch || !search) && !newSearch) {
-            data = await SwapiAPI.getFilms(page);
-        } else {
-            //It's a search!
-            data = await SwapiAPI.searchFilms(newSearch ? newSearch : search);
-        }
-        console.log(data);
-        setFilms(data);
-        setLoading(false);
-    };
+    const {
+        data: films,
+        error,
+        isError,
+        isLoading,
+    } = useQuery(["films", { page, search }], SwapiAPI.getFilms, {
+        keepPreviousData: false,
+    });
 
+    //Get the new URL and the new PAGE, this will then update the query params along with making a request to SWAPI
     const changePage = async (newUrl, newPage) => {
-        setLoading(true);
+        //setLoading(true);
         setSearchParams({ page: newPage });
-        const data = await SwapiAPI.changePage(newUrl);
-        setFilms(data);
-        setLoading(false);
+        //const data = await SwapiAPI.changePage(newUrl);
+        //setFilms(data);
+        //setLoading(false);
     };
 
+    //Make a new search!
     const makeSearch = async (newSearch) => {
         if (newSearch.length > 1) {
             setSearchParams({ search: newSearch });
-            getFilms(newSearch);
         } else {
             setSearchParams({ page: 1 });
-            getFilms(null, true);
         }
     };
 
-    // Get todos from api when component is first mounted
-    useEffect(() => {
-        if (!page) {
-            setSearchParams({ page: 1 });
-        }
-        getFilms();
-    }, []);
     return (
         <>
             <h2>Films</h2>
             <Search makeSearch={makeSearch} />
-            <ListItems data={films} type="Films" />
+            <ListItems data={films} type="Films" loading={isLoading} />
             <PaginationBar
                 data={films}
                 page={page}
                 changePage={changePage}
-                loading={loading}
+                loading={isLoading}
             />
         </>
     );
