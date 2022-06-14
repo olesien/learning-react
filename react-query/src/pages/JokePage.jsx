@@ -48,6 +48,8 @@ const JokePage = () => {
         border-color: red;
     `;
 
+    console.log(isFetching);
+
     return (
         <Container className="py-3">
             <h1>Random Dad Joke</h1>
@@ -55,7 +57,7 @@ const JokePage = () => {
                 Refresh joke
             </Button>
 
-            {(isLoading || isFetching) && (
+            {(isLoading || !!isFetching) && (
                 <ClipLoader
                     color={"#5833FF"}
                     loading={true}
