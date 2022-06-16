@@ -1,77 +1,78 @@
-import { useState, useEffect } from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import { useNavigate, useParams } from 'react-router-dom'
-import TodosAPI from '../services/TodosAPI'
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import WarningAlert from "../components/alerts/WarningAlert";
+import EditTodoForm from "../components/EditTodoForm";
+import ModifyTodoForm from "../components/ModifyTodoForm";
+import LoadingSpinner from "../components/LoadingSpinner";
+import TodosAPI from "../services/TodosAPI";
 
 const EditTodoPage = () => {
-	const [todo, setTodo] = useState()
-	const [newTitle, setNewTitle] = useState("")
-	const { id } = useParams()
-	const navigate = useNavigate()
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
-	const getTodo = async (id) => {
-		const data = await TodosAPI.getTodo(id)
-		setTodo(data)
-		setNewTitle(data.title)
-	}
+    const { data, error, isError, isLoading } = useQuery(["todo", { id }], () =>
+        TodosAPI.getTodo(id)
+    );
 
-	const handleDelete = async () => {
-		if (!window.confirm('U SURE BRO?!')) {
-			return
-		}
+    const deleteTodoMutation = useMutation(TodosAPI.deleteTodo);
 
-		// send request to API to delete the todo
-		await TodosAPI.deleteTodo(id)
+    const updateTodoMutation = useMutation(
+        (newTodoData) => TodosAPI.updateTodo(id, newTodoData),
+        {
+            onSuccess: (newData) => {
+                // set new todo data in query-cache
+                queryClient.setQueryData(["todo", { id }], newData);
 
-		// navigate user to `/todos`
-		navigate('/todos')
-	}
+                // invalidate todos list query
+                queryClient.invalidateQueries("todos");
+            },
+        }
+    );
 
-	const handleSubmit = async e => {
-		e.preventDefault()
+    const handleDelete = async () => {
+        // send request to API to delete the todo
+        await deleteTodoMutation.mutateAsync(id);
 
-		// send request to API to update title for this todo with the value in the input field
-		await TodosAPI.updateTodo(id, {
-			title: newTitle,
-		})
+        // invalidate todos list query
+        queryClient.invalidateQueries("todos");
 
-		// redirect user to /todos/:id
-		navigate(`/todos/${id}`)
-	}
+        // delete todo query for this todo
+        queryClient.removeQueries(["todo", { id }]);
 
-	useEffect(() => {
-		getTodo(id)
-	}, [id])
+        // navigate user to `/todos`
+        navigate("/todos");
+    };
 
-	if (!todo) {
-		return <p>Loading...</p>
-	}
+    const handleSubmit = async (data) => {
+        // send request to API to update title for this todo with the value in the input field
+        await updateTodoMutation.mutateAsync(data);
 
-	return (
-		<div>
-			<h1>Edit: {todo.title}</h1>
+        // redirect user to /todos/:id
+        navigate(`/todos/${id}`);
+    };
 
-			<Form onSubmit={handleSubmit}>
-				<Form.Group className="mb-3" controlId="newTitle">
-					<Form.Label>Title</Form.Label>
-					<Form.Control
-						onChange={e => setNewTitle(e.target.value)}
-						placeholder="Enter title"
-						required
-						type="text"
-						value={newTitle}
-					/>
-				</Form.Group>
+    return (
+        <div>
+            {isLoading && <LoadingSpinner />}
 
-				<div className="d-flex justify-content-between">
-					<Button variant="success" type="submit" disabled={!newTitle.length}>Save</Button>
-					<Button variant="danger" onClick={handleDelete}>Delete</Button>
-				</div>
-			</Form>
+            {isError && <WarningAlert error={error.message} />}
 
-		</div>
-	)
-}
+            {data && (
+                <>
+                    <h1>Edit: {data.title}</h1>
 
-export default EditTodoPage
+                    {/* <EditTodoForm todo={data} onDelete={handleDelete} onSubmit={handleSubmit} disabled={deleteTodoMutation.isLoading} /> */}
+                    <ModifyTodoForm
+                        todo={data}
+                        onDelete={handleDelete}
+                        onSubmit={handleSubmit}
+                        disabled={deleteTodoMutation.isLoading}
+                    />
+                </>
+            )}
+        </div>
+    );
+};
+
+export default EditTodoPage;

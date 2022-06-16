@@ -1,55 +1,49 @@
-import { useEffect, useState } from 'react'
-import ListGroup from 'react-bootstrap/ListGroup'
-import { Link } from 'react-router-dom'
-import TodosAPI from '../services/TodosAPI'
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import WarningAlert from "../components/alerts/WarningAlert";
+import CreateTodoForm from "../components/CreateTodoForm";
+import LoadingSpinner from "../components/LoadingSpinner";
+import TodoList from "../components/TodoList";
+import TodosAPI from "../services/TodosAPI";
+import ModifyTodoForm from "../components/ModifyTodoForm";
 
 const TodosPage = () => {
-	const [todos, setTodos] = useState([])
+    const queryClient = useQueryClient();
 
-	const getTodos = async () => {
-		// Get todos from api
-		const data = await TodosAPI.getTodos()
+    const { data, error, isError, isLoading } = useQuery(
+        "todos",
+        TodosAPI.getTodos
+    );
 
-		// sort alphabetically by title
-		data.sort((a,b) => a.title.localeCompare(b.title))
+    const createTodoMutation = useMutation(TodosAPI.createTodo, {
+        onSuccess: (newData) => {
+            queryClient.setQueryData("todos", [...data, newData]);
+        },
+    });
 
-		// sort by completed status
-		data.sort((a,b) => a.completed - b.completed)
+    const handleCreateTodoFormSubmit = async (newTodo) => {
+        // create new todo in API
+        await createTodoMutation.mutateAsync(newTodo);
+    };
 
-		// update todos state
-		setTodos(data)
-	}
+    return (
+        <>
+            <h1>Todos</h1>
 
-	// Get todos from api when component is first mounted
-	useEffect(() => {
-		getTodos()
-	}, [])
+            {/* <CreateTodoForm onSubmit={handleCreateTodoFormSubmit} disabled={createTodoMutation.isLoading} /> */}
+            <ModifyTodoForm
+                onSubmit={handleCreateTodoFormSubmit}
+                disabled={createTodoMutation.isLoading}
+            />
 
-	return (
-		<>
-			<h1>Todos</h1>
+            <hr className="my-5" />
 
-			{todos.length > 0 && (
-				<ListGroup className="todolist">
-					{todos.map(todo =>
-						<ListGroup.Item
-							action
-							as={Link}
-							className={todo.completed ? 'done' : ''}
-							key={todo.id}
-							to={`/todos/${todo.id}`}
-						>
-							{todo.title}
-						</ListGroup.Item>
-					)}
-				</ListGroup>
-			)}
+            {isLoading && <LoadingSpinner />}
 
-			{todos.length === 0 && (
-				<p className="status">No todos 🥳!</p>
-			)}
-		</>
-	)
-}
+            {isError && <WarningAlert error={error.message} />}
+
+            {data && <TodoList todos={data} />}
+        </>
+    );
+};
 
 export default TodosPage;

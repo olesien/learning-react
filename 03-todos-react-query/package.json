@@ -1,5 +1,5 @@
 {
-  "name": "10-better-todos",
+  "name": "03-todos-react-query",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,8 +12,11 @@
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
+    "react-query": "^3.39.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "react-spinners": "^0.12.0",
+    "sass": "^1.52.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -21,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch data/db.json --port 3001"
+    "server": "json-server --watch data/db.json --port 3001 --delay 3000"
   },
   "eslintConfig": {
     "extends": [

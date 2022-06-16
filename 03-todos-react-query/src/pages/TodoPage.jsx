@@ -1,41 +1,45 @@
-import { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
+import WarningAlert from '../components/alerts/WarningAlert'
+import LoadingSpinner from '../components/LoadingSpinner'
 import TodosAPI from '../services/TodosAPI'
 
 const TodoPage = () => {
-	const [todo, setTodo] = useState()
 	const { id } = useParams()
+	const queryClient = useQueryClient()
+	const { data, error, isError, isLoading } = useQuery(['todo', { id }], () => TodosAPI.getTodo(id))
 
-	const getTodo = async (id) => {
-		const data = await TodosAPI.getTodo(id)
-		setTodo(data)
-	}
+	const toggleTodoMutation = useMutation(() => {
+		return TodosAPI.updateTodo(id, {
+			completed: !data.completed
+		})
+	})
 
 	// Toggle the completed status of a todo in the api
 	const toggleTodo = async () => {
-		await TodosAPI.updateTodo(id, {
-			completed: !todo.completed
-		})
-		getTodo(id)
-	}
+		await toggleTodoMutation.mutateAsync()
 
-	useEffect(() => {
-		getTodo(id)
-	}, [id])
-
-	if (!todo) {
-		return <p>Loading...</p>
+		// invalidate todo query
+		queryClient.invalidateQueries(['todo', { id }])
 	}
 
 	return (
 		<div>
-			<h1>{todo.title}</h1>
+			{isLoading && <LoadingSpinner />}
 
-			<p><strong>Status:</strong> {todo.completed ? 'Completed' : 'Not completed'}</p>
+			{isError && <WarningAlert error={error.message} />}
 
-			<Button variant="success" onClick={toggleTodo}>Toggle</Button>
-			<Button variant="warning" as={Link} to={`/todos/${id}/edit`}>Edit</Button>
+			{data && (
+				<>
+					<h1>{data.title}</h1>
+
+					<p><strong>Status:</strong> {data.completed ? 'Completed' : 'Not completed'}</p>
+
+					<Button variant="success" onClick={toggleTodo} disabled={toggleTodoMutation.isLoading}>Toggle</Button>
+					<Button variant="warning" as={Link} to={`/todos/${id}/edit`}>Edit</Button>
+				</>
+			)}
 		</div>
 	)
 }
