@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-const CreateTodoForm = ({
+import LoadingSpinner from "./LoadingSpinner";
+
+const EditTodoForm = ({
     onSubmit,
     disabled = false,
     todo = false,
@@ -67,8 +69,9 @@ const CreateTodoForm = ({
                     disabled={!newTitle.length || disabled}
                 >
                     Save
+                    {disabled && <LoadingSpinner />}
                 </Button>
-                {!!todo && (
+                {!!onDelete && (
                     <Button
                         variant="danger"
                         onClick={handleDelete}
@@ -82,4 +85,4 @@ const CreateTodoForm = ({
     );
 };
 
-export default CreateTodoForm;
+export default EditTodoForm;
