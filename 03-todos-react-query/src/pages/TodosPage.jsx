@@ -6,6 +6,9 @@ import TodoList from "../components/TodoList";
 import TodosAPI from "../services/TodosAPI";
 import ModifyTodoForm from "../components/ModifyTodoForm";
 
+import { motion } from "framer-motion";
+import PageTransition from "../components/PageTransition";
+
 const TodosPage = () => {
     const queryClient = useQueryClient();
 
@@ -26,7 +29,7 @@ const TodosPage = () => {
     };
 
     return (
-        <>
+        <PageTransition>
             <h1>Todos</h1>
 
             {/* <CreateTodoForm onSubmit={handleCreateTodoFormSubmit} disabled={createTodoMutation.isLoading} /> */}
@@ -42,7 +45,7 @@ const TodosPage = () => {
             {isError && <WarningAlert error={error.message} />}
 
             {data && <TodoList todos={data} />}
-        </>
+        </PageTransition>
     );
 };
 

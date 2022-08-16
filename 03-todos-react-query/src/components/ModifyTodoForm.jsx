@@ -7,11 +7,11 @@ import LoadingSpinner from "./LoadingSpinner";
 const EditTodoForm = ({
     onSubmit,
     disabled = false,
-    todo = false,
+    todo = { title: "" },
     onDelete = false,
 }) => {
     // input state
-    const [newTitle, setNewTitle] = useState("");
+    const [newTitle, setNewTitle] = useState(todo.title);
     // input reference
     const newTitleRef = useRef();
 
@@ -21,7 +21,7 @@ const EditTodoForm = ({
 
         // push a new todo to the todos state
         let data = {};
-        if (todo) {
+        if (todo.title !== "") {
             //is edit
             data = { title: newTitle };
         } else {
