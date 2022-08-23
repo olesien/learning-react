@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import { ToastContainer } from "react-toastify";
 import HomePage from "./pages/HomePage";
 import NotFound from "./pages/NotFound";
 import "./assets/scss/App.scss";
@@ -24,6 +25,7 @@ function App() {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </QueryClientProvider>
+            <ToastContainer />
         </div>
     );
 }
