@@ -96,6 +96,16 @@ const getAuthor = (data) => {
     return get(`/authors/${id}?_embed=books`);
 };
 
+/**
+ * Create a new author
+ *
+ * @param data Object with properties and values for the new author
+ */
+const createAuthor = async (data) => {
+    const res = await axios.post(`/authors`, data);
+    return res.data;
+};
+
 const exports = {
     getBooks,
     getBook,
@@ -104,6 +114,7 @@ const exports = {
     deleteBook,
     getAuthors,
     getAuthor,
+    createAuthor,
 };
 
 export default exports;

@@ -5,6 +5,8 @@ import BasicTable from "../components/BasicTable";
 
 import { NavLink } from "react-router-dom";
 
+import CreateAuthorForm from "../components/forms/CreateAuthorForm";
+
 export default function BooksPage() {
     const {
         isLoading: authorsLoading,
@@ -30,7 +32,11 @@ export default function BooksPage() {
     if (authorsLoading) return "Loading...";
 
     if (authorsError) return "An error has occurred: ";
-    return <BasicTable data={authors} columns={columns} />;
+    return (
+        <>
+            <BasicTable data={authors} columns={columns} /> <CreateAuthorForm />
+        </>
+    );
     // return (
     //     <Table striped bordered hover>
     //         <thead>
