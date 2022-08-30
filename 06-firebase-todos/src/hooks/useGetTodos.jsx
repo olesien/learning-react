@@ -1,5 +1,7 @@
-import React from "react";
+import { db } from "../firebase";
+import useGetCollection from "./useGetCollection";
 
 export default function useGetTodos() {
-    return {};
+    const { data: todos, loading } = useGetCollection(db, "todos");
+    return { todos, loading };
 }

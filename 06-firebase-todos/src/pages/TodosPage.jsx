@@ -1,54 +1,13 @@
-import { collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
-import { db } from "../firebase";
 
-const todos = [
-    {
-        id: "14c9b3244b4a",
-        title: "Learn React 😊",
-        completed: true,
-    },
-    {
-        id: "5e584050fc4f",
-        title: "Learn Firebase 🔥",
-        completed: false,
-    },
-    {
-        id: "d3329c34dc67",
-        title: "Profit 💰",
-        completed: false,
-    },
-    {
-        id: "44fd9cc7e1a4",
-        title: "Take over the world 😈",
-        completed: false,
-    },
-];
+import useGetTodos from "../hooks/useGetTodos";
 
 const TodosPage = () => {
-    const [todos, setTodos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const getSnapshot = async () => {
-            setLoading(true);
-            const ref = collection(db, "todos");
-            const snapshot = await getDocs(ref);
-            //console.log(snapshot);
-            const data = snapshot.docs.map((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                return { id: doc.id, ...doc.data() };
-                //return doc.data();
-                //console.log(doc.id, " => ", doc.data());
-            });
-            setTodos(data);
-            setLoading(false);
-        };
-        getSnapshot();
-    }, []);
+    let { todos, loading } = useGetTodos();
     if (loading) {
         return <p>Loading</p>;
     }
