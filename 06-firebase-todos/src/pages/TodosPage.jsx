@@ -1,39 +1,27 @@
-import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
-
+import CreateTodoForm from "../components/CreateTodoForm";
+import TodoList from "../components/TodoList";
 import useGetTodos from "../hooks/useGetTodos";
 
 const TodosPage = () => {
-    let { todos, loading } = useGetTodos();
-    if (loading) {
-        return <p>Loading</p>;
-    }
+    const { data: todos, getData, loading } = useGetTodos();
+
     return (
         <Container className="py-3">
             <div className="d-flex justify-content-between align-items-start mb-3">
                 <h1>Todos</h1>
-                <Button onClick={() => {}}>Refresh</Button>
+                <Button onClick={getData}>Refresh</Button>
             </div>
 
-            <ListGroup>
-                {todos.length < 1 ? (
-                    <p>No todos</p>
-                ) : (
-                    todos.map((todo, index) => (
-                        <ListGroup.Item
-                            action
-                            as={Link}
-                            to={`/todos/${todo.id}`}
-                            key={index}
-                        >
-                            {todo.title}
-                        </ListGroup.Item>
-                    ))
-                )}
-            </ListGroup>
+            {loading && <p>Loading data...</p>}
+
+            {!loading && <TodoList todos={todos} />}
+
+            <hr className="my-4" />
+
+            <h2>Create New Todo</h2>
+            <CreateTodoForm />
         </Container>
     );
 };
