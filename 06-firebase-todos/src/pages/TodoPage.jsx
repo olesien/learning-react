@@ -9,6 +9,7 @@ import { doc, deleteDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 import Moment from "moment";
+import ModifyTodoForm from "../components/ModifyTodoForm";
 
 const TodoPage = () => {
     const { id } = useParams();
@@ -62,7 +63,11 @@ const TodoPage = () => {
                     <p>
                         Deadline: <span className="deadline">{formatDate}</span>
                     </p>
-
+                    <ModifyTodoForm
+                        id={id}
+                        title={todo.title}
+                        date={todo.deadline}
+                    />
                     <ButtonGroup className="todo-actions">
                         <Button variant="primary" onClick={onToggle}>
                             Toggle

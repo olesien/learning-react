@@ -1,41 +1,55 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import {
+    doc,
+    updateDoc,
+    collection,
+    addDoc,
+    Timestamp,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 import "../../node_modules/react-datetime-picker/dist/DateTimePicker.css";
 import "../../node_modules/react-calendar/dist/Calendar.css";
 import "../../node_modules/react-clock/dist/Clock.css";
 import { useState } from "react";
+import Moment from "moment";
 
-const CreateTodoForm = () => {
+const ModifyTodoForm = ({ id, title, date }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
     } = useForm();
-    const [value, onChange] = useState(new Date());
+    const [changedTitle, setChangedTitle] = useState(title);
+    const [changedDate, setChangedDate] = useState(
+        new Date(date.seconds * 1000)
+    );
+    console.log(changedDate);
 
-    const onCreateTodo = async (data) => {
+    const onModifyTodo = async (data) => {
         // make firestore doc, plz
         console.log(data.title);
         console.log(data.due_date);
-        await addDoc(collection(db, "todos"), {
-            completed: false,
+        console.log(id);
+        console.log(Timestamp.fromDate(new Date(data.due_date)));
+
+        const ref = doc(db, "todos", id);
+        await updateDoc(ref, {
             title: data.title,
             deadline: Timestamp.fromDate(new Date(data.due_date)),
         });
 
-        console.log("Todo created! 💪🏻");
+        console.log("Todo edited! 💪🏻");
         reset();
     };
 
     return (
-        <Form onSubmit={handleSubmit(onCreateTodo)} noValidate>
+        <Form onSubmit={handleSubmit(onModifyTodo)} noValidate>
             <Form.Group className="mb-3" controlId="title">
-                <Form.Label>Title of the new todo</Form.Label>
+                <Form.Label>Change title</Form.Label>
                 <Form.Control
                     {...register("title", {
                         required: "A todo is not a todo without a todo title",
@@ -45,6 +59,10 @@ const CreateTodoForm = () => {
                                 "That's too short to be a todo, better do it right now instead!",
                         },
                     })}
+                    value={changedTitle}
+                    onChange={(e) => {
+                        setChangedTitle(e.target.value);
+                    }}
                     placeholder="Buy gluten-free bread"
                     type="text"
                 />
@@ -59,6 +77,10 @@ const CreateTodoForm = () => {
                         required:
                             "A due date is required, otherwise it would be procastrinated forever",
                     })}
+                    value={changedDate.toLocaleDateString("en-CA")}
+                    onChange={(e) => {
+                        setChangedDate(new Date(e.target.value));
+                    }}
                     type="date"
                 />
                 {errors.due_date && (
@@ -67,10 +89,10 @@ const CreateTodoForm = () => {
             </Form.Group>
 
             <Button variant="success" type="submit">
-                Create
+                Edit
             </Button>
         </Form>
     );
 };
 
-export default CreateTodoForm;
+export default ModifyTodoForm;

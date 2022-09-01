@@ -1,8 +1,8 @@
 import useGetCollection from "./useGetCollection";
-import useStreamCollection from "./useStreamCollection";
+import useStreamSortedCollection from "./useStreamSortedCollection";
 
 const useGetTodos = () => {
-    return useStreamCollection("todos");
+    return useStreamSortedCollection("todos", "deadline");
 };
 
 export default useGetTodos;
