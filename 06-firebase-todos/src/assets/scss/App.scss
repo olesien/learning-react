@@ -1,4 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
+@import 'react-toastify/scss/main';
+@import 'toastify';
 
 #App {
 	position: relative;
@@ -24,4 +26,15 @@ h1, h2, h3, h4, h5, h6 {
 	color: $danger;
 	font-size: 0.875em;
 	margin-top: 0.25rem;
+}
+
+.todo-list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.due-date {
+		color: $text-muted;
+		font-size: .875em;
+	}
 }

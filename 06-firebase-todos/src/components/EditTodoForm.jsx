@@ -1,30 +1,31 @@
+import moment from 'moment'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore'
+import { doc, updateDoc, Timestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const CreateTodoForm = () => {
-	const { register, handleSubmit, formState: { errors }, reset } = useForm()
+const EditTodoForm = ({ todo, onTodoUpdated }) => {
+	const { register, handleSubmit, formState: { errors }} = useForm()
 
-	const onCreateTodo = async (data) => {
-		// make firestore doc, plz
-		await addDoc(collection(db, 'todos'), {
-			completed: false,
-			created: serverTimestamp(),
+	const onUpdateTodo = async (data) => {
+		// update firestore doc, plz
+		await updateDoc(doc(db, 'todos', todo.id), {
 			title: data.title,
 			due_date: Timestamp.fromDate( new Date(data.due_date) ),
 		})
 
-		toast.success("💪🏻 Todo created!")
-		reset()
+		toast.success("💪🏻 Todo updated!")
+		onTodoUpdated()
 	}
 
+	const due_date = moment( todo.due_date.toMillis() ).format('YYYY-MM-DD')
+
 	return (
-		<Form onSubmit={handleSubmit(onCreateTodo)} noValidate>
+		<Form onSubmit={handleSubmit(onUpdateTodo)} noValidate>
 			<Form.Group className="mb-3" controlId="title">
-				<Form.Label>Title of the new todo</Form.Label>
+				<Form.Label>Title</Form.Label>
 				<Form.Control
 					{...register("title", {
 						required: "A todo is not a todo without a todo title",
@@ -33,6 +34,7 @@ const CreateTodoForm = () => {
 							message: "That's too short to be a todo, better do it right now instead!",
 						}
 					})}
+					defaultValue={todo.title}
 					placeholder="Buy gluten-free bread"
 					type="text"
 				/>
@@ -45,14 +47,15 @@ const CreateTodoForm = () => {
 					{...register("due_date", {
 						required: "A due date is required, otherwise it would be procastrinated forever",
 					})}
+					defaultValue={due_date}
 					type="date"
 				/>
 				{errors.due_date && <div className="invalid">{errors.due_date.message}</div>}
 			</Form.Group>
 
-			<Button variant="success" type="submit">Create</Button>
+			<Button variant="success" type="submit">Save</Button>
 		</Form>
 	)
 }
 
-export default CreateTodoForm
+export default EditTodoForm

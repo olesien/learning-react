@@ -1,31 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase";
+import { useEffect, useState } from 'react'
+import {
+	collection,
+	onSnapshot,
+	query
+} from 'firebase/firestore'
+import { db } from '../firebase'
 
-const useStreamCollection = (col) => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const useStreamCollection = (col, ...queryConstraints) => {
+	const [data, setData] = useState([])
+	const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        //get refernece to collection
-        const ref = collection(db, col);
+	useEffect(() => {
+		// get reference to collection
+		const colRef = collection(db, col)
+		const queryRef = query(colRef, ...queryConstraints)
 
-        //subsrcibne to changes in collection
+		// subscribe to changes in collection
+		const unsubscribe = onSnapshot(queryRef, (snapshot) => {
+			// got me a new snapshot 🤳🏻
+			const docs = snapshot.docs.map(doc => {
+				return {
+					id: doc.id,
+					...doc.data(),
+				}
+			})
 
-        const unsubscribe = onSnapshot(ref, (snapshot) => {
-            console.log("new snap");
+			setData(docs)
+			setLoading(false)
+		})
 
-            const docs = snapshot.docs.map((doc) => {
-                return { id: doc.id, ...doc.data() };
-            });
-            setData(docs);
-            setLoading(false);
-        });
+		return unsubscribe
+	}, [])
 
-        return unsubscribe;
-    }, []);
+	return {
+		data,
+		loading,
+	}
+}
 
-    return { data, loading };
-};
-
-export default useStreamCollection;
+export default useStreamCollection

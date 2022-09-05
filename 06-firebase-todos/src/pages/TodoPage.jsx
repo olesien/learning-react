@@ -1,44 +1,42 @@
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Container from "react-bootstrap/Container";
-import { useParams, useNavigate } from "react-router-dom";
-import useGetTodo from "../hooks/useGetTodo";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
-import { doc, deleteDoc, setDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-
-import Moment from "moment";
-import ModifyTodoForm from "../components/ModifyTodoForm";
+import { fbTimestampToDateString } from "../helpers/time";
+import useGetTodo from "../hooks/useGetTodo";
+import EditTodoForm from "../components/EditTodoForm";
 
 const TodoPage = () => {
+    const [showEditForm, setShowEditForm] = useState(false);
     const { id } = useParams();
-    const { data: todo, getData, loading } = useGetTodo(id);
-    const docRef = doc(db, "todos", id);
-    let navigate = useNavigate();
-    const onToggle = async () => {
-        if (!todo) return;
-        await setDoc(
-            docRef,
-            {
-                completed: !todo.completed,
-            },
-            { merge: true }
-        );
+    const { data: todo, loading } = useGetTodo(id);
+    const navigate = useNavigate();
+
+    const onTodoUpdated = () => {
+        setShowEditForm(false);
     };
 
-    const onDelete = async () => {
-        if (!todo) return;
-        const notDeleted = await deleteDoc(docRef);
-        if (!notDeleted) {
-            toast("Document deleted!!");
-            navigate(`/todos`);
-        }
+    const deleteTodo = async () => {
+        const ref = doc(db, "todos", id);
+        await deleteDoc(ref);
+
+        toast.success("💣 Todo deleted");
+
+        // redirect user to todos list
+        navigate("/todos", { replace: true });
     };
-    const deadline = todo.deadline
-        ? new Date(todo.deadline.seconds * 1000)
-        : "";
-    const formatDate = Moment(deadline).format("DD-MM-YYYY, hh:mm");
+
+    const toggleTodo = async () => {
+        const ref = doc(db, "todos", id);
+        await updateDoc(ref, {
+            completed: !todo.completed,
+        });
+    };
+
     return (
         <Container className="py-3">
             {loading && <p>Loading todo...</p>}
@@ -49,33 +47,45 @@ const TodoPage = () => {
                 <>
                     <div className="d-flex justify-content-between align-items-start mb-3">
                         <h1>{todo.title}</h1>
-
-                        <Button onClick={getData}>Refresh</Button>
                     </div>
 
-                    <p>
-                        Status:{" "}
-                        <span className="status">
-                            {todo.completed ? "Completed" : "Not completed"}
-                        </span>
-                    </p>
+                    <dl className="row">
+                        <dt className="col-3">Due date</dt>
+                        <dd className="col-9">
+                            {fbTimestampToDateString(todo.due_date)}
+                        </dd>
 
-                    <p>
-                        Deadline: <span className="deadline">{formatDate}</span>
-                    </p>
-                    <ModifyTodoForm
-                        id={id}
-                        title={todo.title}
-                        date={todo.deadline}
-                    />
+                        <dt className="col-3">Status</dt>
+                        <dd className="col-9">
+                            {todo.completed ? "Completed" : "Not completed"}
+                        </dd>
+                    </dl>
+
                     <ButtonGroup className="todo-actions">
-                        <Button variant="primary" onClick={onToggle}>
+                        <Button variant="primary" onClick={toggleTodo}>
                             Toggle
                         </Button>
-                        <Button variant="danger" onClick={onDelete}>
+                        <Button
+                            variant="warning"
+                            onClick={() => setShowEditForm(!showEditForm)}
+                        >
+                            {showEditForm ? "Cancel Edit" : "Edit"}
+                        </Button>
+                        <Button variant="danger" onClick={deleteTodo}>
                             Delete
                         </Button>
                     </ButtonGroup>
+
+                    {showEditForm && (
+                        <>
+                            <hr className="my-4" />
+
+                            <EditTodoForm
+                                onTodoUpdated={onTodoUpdated}
+                                todo={todo}
+                            />
+                        </>
+                    )}
                 </>
             )}
         </Container>
