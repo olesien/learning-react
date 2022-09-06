@@ -13,6 +13,7 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import "./assets/scss/App.scss";
 import { useAuthContext } from "./contexts/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
+import ResetPage from "./pages/ResetPage";
 
 function App() {
     const { user, loading } = useAuthContext();
@@ -24,8 +25,14 @@ function App() {
                 <>
                     <Navigation />
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="*" element={<NotFound />} />
+                        <Route
+                            path="/"
+                            element={
+                                <ProtectedRoute user={user}>
+                                    <HomePage />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route
                             path="/todos"
                             element={
@@ -54,19 +61,28 @@ function App() {
                         <Route
                             path="/login"
                             element={
-                                <ProtectedRoute user={!user}>
+                                <ProtectedRoute user={!user} redirectPath={"/"}>
                                     <LoginPage user={user} />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/forgot-password"
+                            element={
+                                <ProtectedRoute user={!user} redirectPath={"/"}>
+                                    <ResetPage user={user} />
                                 </ProtectedRoute>
                             }
                         />
                         <Route
                             path="/signup"
                             element={
-                                <ProtectedRoute user={!user}>
+                                <ProtectedRoute user={!user} redirectPath={"/"}>
                                     <SignupPage user={user} />
                                 </ProtectedRoute>
                             }
                         />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                     <ToastContainer autoClose={3000} />
                     <ReactQueryDevtools position="bottom-right" />

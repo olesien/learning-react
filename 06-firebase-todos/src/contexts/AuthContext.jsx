@@ -1,9 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -28,20 +29,16 @@ const AuthContextProvider = ({ children }) => {
     const logout = () => {
         return signOut(auth);
     };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
+    const resetPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
+    };
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             setUser(user);
-            // ...
-        } else {
-            // User is signed out
-            // ...
-            setUser(undefined);
-        }
-        setLoading(false);
-    });
+            setLoading(false);
+        });
+        return unsubscribe;
+    }, []);
 
     // add auth-state observer here (somehow... 😈)
 
@@ -50,6 +47,7 @@ const AuthContextProvider = ({ children }) => {
         login,
         logout,
         signup,
+        resetPassword,
         user,
         loading,
     };
