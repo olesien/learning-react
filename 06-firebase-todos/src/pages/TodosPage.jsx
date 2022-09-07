@@ -2,21 +2,23 @@ import Container from "react-bootstrap/Container";
 import CreateTodoForm from "../components/CreateTodoForm";
 import TodoList from "../components/TodoList";
 import useGetTodos from "../hooks/useGetTodos";
-import { collection, orderBy, query } from "firebase/firestore";
+import { collection, orderBy, query, where } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { db } from "../firebase";
-import { Navigate } from "react-router-dom";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const TodosPage = () => {
-    const queryRef = query(collection(db, "todos"), orderBy("title"));
-    const { data: todos, isLoading } = useFirestoreQueryData(
-        ["todos"],
-        queryRef,
-        {
-            idField: "id",
-            subscribe: true,
-        }
-    );
+    const { user } = useAuthContext();
+
+    // const { data: todos, isLoading } = useFirestoreQueryData(
+    //     ["todos"],
+    //     queryRef,
+    //     {
+    //         idField: "id",
+    //         subscribe: true,
+    //     }
+    // );
+    const { data: todos, isLoading } = useGetTodos(user.uid);
 
     return (
         <Container className="py-3">

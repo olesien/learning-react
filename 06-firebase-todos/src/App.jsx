@@ -14,6 +14,7 @@ import "./assets/scss/App.scss";
 import { useAuthContext } from "./contexts/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
 import ResetPage from "./pages/ResetPage";
+import UpdateProfilePage from "./pages/UpdateProfilePage";
 
 function App() {
     const { user, loading } = useAuthContext();
@@ -54,6 +55,14 @@ function App() {
                             element={
                                 <ProtectedRoute user={user}>
                                     <LogoutPage user={user} />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <ProtectedRoute user={user}>
+                                    <UpdateProfilePage user={user} />
                                 </ProtectedRoute>
                             }
                         />

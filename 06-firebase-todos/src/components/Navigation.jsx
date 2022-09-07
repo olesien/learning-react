@@ -29,6 +29,9 @@ const Navigation = () => {
                                 <Nav.Link as={NavLink} end to="/todos">
                                     Todos
                                 </Nav.Link>
+                                <Nav.Link as={NavLink} end to="/profile">
+                                    Profile
+                                </Nav.Link>
                                 <Nav.Link as={NavLink} end to="/logout">
                                     Logout
                                 </Nav.Link>

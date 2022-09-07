@@ -1,7 +1,7 @@
-import useStreamDocument from "./useStreamDocument"
+import useStreamDocument from "./useStreamDocument";
 
-const useGetTodo = (id) => {
-	return useStreamDocument('todos', id)
-}
+const useGetTodo = (id, uid) => {
+    return useStreamDocument("todos", id);
+};
 
-export default useGetTodo
+export default useGetTodo;

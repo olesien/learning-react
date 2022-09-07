@@ -1,8 +1,12 @@
-import { orderBy } from 'firebase/firestore'
-import useStreamCollection from "./useStreamCollection"
+import { orderBy, where } from "firebase/firestore";
+import useStreamCollection from "./useStreamCollection";
 
-const useGetTodos = () => {
-	return useStreamCollection('todos', orderBy('title'))
-}
+const useGetTodos = (uid) => {
+    return useStreamCollection(
+        "todos",
+        where("uid", "==", uid),
+        orderBy("title")
+    );
+};
 
-export default useGetTodos
+export default useGetTodos;
