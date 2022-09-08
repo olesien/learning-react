@@ -1,3 +1,4 @@
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRef, useState } from "react";
 import {
     Container,
@@ -7,20 +8,44 @@ import {
     Button,
     Card,
     Alert,
+    Image,
 } from "react-bootstrap";
 
 import { useAuthContext } from "../contexts/AuthContext";
+import { projectStorage } from "../firebase";
 
 const UpdateProfilePage = ({ user }) => {
     console.log(user);
-    const { updateName, updateMail, changePassword } = useAuthContext();
+    const { setDisplayNameAndPhotoUrl, updateMail, changePassword } =
+        useAuthContext();
     const displayNameRef = useRef(user.displayName);
+    const photoUrlRef = useRef();
     const emailRef = useRef(user.email);
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
+    const [thumbnail, setThumbnail] = useState(null);
+    const [thumbnailError, setThumbnailError] = useState(null);
+
+    const handleFileChange = (e) => {
+        setThumbnail(null);
+        let selected = e.target.files[0];
+        console.log(selected);
+        if (!selected) {
+            setThumbnailError("Please select a file");
+        }
+        if (!selected.type.includes("image")) {
+            setThumbnailError("Selected file must be an image");
+        }
+        if (selected.size > 100000) {
+            return setThumbnailError("Image file size must be less than 100kb");
+        }
+        setThumbnailError(null);
+        setThumbnail(selected);
+        console.log("thumbnail updated");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +55,7 @@ const UpdateProfilePage = ({ user }) => {
             return setError("The passwords does not match");
         }
 
-        if (passwordRef.current.value.length < 5) {
+        if (passwordRef.current.value && passwordRef.current.value.length < 5) {
             return setError("Password is too short..");
         }
 
@@ -44,11 +69,31 @@ const UpdateProfilePage = ({ user }) => {
 
             // update displayName *ONLY* if it has changed
             if (
-                displayNameRef.current.value &&
-                displayNameRef.current.value != user.displayName
+                displayNameRef.current.value !== user.displayName ||
+                thumbnail
             ) {
-                //changed
-                await updateName(displayNameRef.current.value);
+                let photoURL = "";
+                if (thumbnail) {
+                    //set new thumbnail
+                    const uploadPath = `thumnbnails/${user.uid}/${thumbnail.name}`;
+                    const storageRef = ref(projectStorage, uploadPath);
+                    const img = await uploadBytes(storageRef, thumbnail);
+                    console.log(img);
+
+                    // const img = await projectStorage
+                    //     .ref(uploadPath)
+                    //     .put(thumbnail);
+                    const fullPath = img.metadata.fullPath;
+                    photoURL = await getDownloadURL(storageRef);
+                    console.log(photoURL);
+                }
+
+                await setDisplayNameAndPhotoUrl(
+                    displayNameRef.current.value
+                        ? displayNameRef.current.value
+                        : user.displayName,
+                    photoURL
+                );
             }
 
             if (
@@ -93,6 +138,16 @@ const UpdateProfilePage = ({ user }) => {
                                 {/*
 									Fill the displayName and email form fields with their current value!
 								*/}
+                                <div className="d-flex justify-content-center my-3">
+                                    <Image
+                                        src={
+                                            user.photoURL ||
+                                            "https://via.placeholder.com/225"
+                                        }
+                                        fluid
+                                        roundedCircle
+                                    />
+                                </div>
                                 <Form.Group id="displayName" className="mb-3">
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control
@@ -101,6 +156,15 @@ const UpdateProfilePage = ({ user }) => {
                                         placeholder={user.displayName}
                                     />
                                 </Form.Group>
+
+                                {/* <Form.Group id="photoUrl" className="mb-3">
+                                    <Form.Label>Photo URL</Form.Label>
+                                    <Form.Control
+                                        type="url"
+                                        ref={photoUrlRef}
+                                        defaultValue={user.photoURL}
+                                    />
+                                </Form.Group> */}
 
                                 <Form.Group id="email" className="mb-3">
                                     <Form.Label>Email</Form.Label>
@@ -131,6 +195,19 @@ const UpdateProfilePage = ({ user }) => {
                                         type="password"
                                         ref={passwordConfirmRef}
                                         autoComplete="new-password"
+                                    />
+                                </Form.Group>
+
+                                {thumbnailError && (
+                                    <div className="error">
+                                        {thumbnailError}
+                                    </div>
+                                )}
+                                <Form.Group id="profile-img" className="mb-3">
+                                    <Form.Label>Profile Thumbnail</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        onChange={handleFileChange}
                                     />
                                 </Form.Group>
 

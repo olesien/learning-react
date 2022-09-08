@@ -1,0 +1,1013 @@
+{
+    "DB": {
+        "currentClips": [
+            {
+                "attackerPrimaryRoundsLeft": "30",
+                "attackerSecondaryRoundsLeft": "1",
+                "attackerPrimaryRoundsType": "5,1",
+                "attackerSecondaryRoundsType": "16,1",
+                "attackerPrimaryReloads": "0",
+                "attackerSecondaryReloads": "0",
+                "fightID": null,
+                "attackerID": "2187764",
+                "defenderID": "554197",
+                "attackerPrimaryAmmoType": null,
+                "attackerSecondaryAmmoType": null,
+                "attackerPrimaryType": { "ammoID": "5", "ammoCategoryID": "1" },
+                "attackerSecondaryType": {
+                    "ammoID": "16",
+                    "ammoCategoryID": "1"
+                },
+                "defenderPrimaryReloads": "0",
+                "defenderSecondaryReloads": "0",
+                "defenderPrimaryAmmoType": null,
+                "defenderSecondaryAmmoType": null,
+                "defenderPrimaryType": { "ammoID": "1", "ammoCategoryID": "1" },
+                "defenderSecondaryType": {
+                    "ammoID": "2",
+                    "ammoCategoryID": "1"
+                }
+            }
+        ],
+        "attackerAmmo": {
+            "5": [
+                {
+                    "amount": "1644535",
+                    "price": "18",
+                    "ammoID": "5",
+                    "ammoCategoryID": "1",
+                    "ammoTitle": "5.56mm Rifle Round",
+                    "categoryTitle": "Standard",
+                    "priceMultiplier": "1"
+                },
+                {
+                    "amount": "886",
+                    "price": "18",
+                    "ammoID": "5",
+                    "ammoCategoryID": "2",
+                    "ammoTitle": "5.56mm Rifle Round",
+                    "categoryTitle": "Hollow Point",
+                    "priceMultiplier": "1.1"
+                }
+            ],
+            "16": [
+                {
+                    "amount": "97735",
+                    "price": "7",
+                    "ammoID": "16",
+                    "ammoCategoryID": "1",
+                    "ammoTitle": "Dart",
+                    "categoryTitle": "Standard",
+                    "priceMultiplier": "1"
+                }
+            ]
+        },
+        "attackerUser": {
+            "userID": "2187764",
+            "playername": "olesien",
+            "gender": "Male",
+            "factionID": "16312",
+            "life": 2292,
+            "maxlife": "7275",
+            "corp": "80258",
+            "currentarea": "1",
+            "level": "98",
+            "honorID": "190",
+            "marriedto": "2105398",
+            "statsModifiers": {
+                "strength": {
+                    "legend": [
+                        "+24% to Strength from Merits",
+                        "+11% to Strength from Faction",
+                        "+5% to Strength from Education",
+                        "-25% to Strength from Drugs"
+                    ],
+                    "value": 15
+                },
+                "speed": {
+                    "legend": [
+                        "+21% to Speed from Merits",
+                        "+14% to Speed from Education",
+                        "+11% to Speed from Faction",
+                        "-25% to Speed from Drugs"
+                    ],
+                    "value": 21
+                },
+                "dexterity": {
+                    "legend": [
+                        "+21% to Dexterity from Merits",
+                        "+4% to Dexterity from Education",
+                        "-25% to Dexterity from Drugs"
+                    ],
+                    "value": 0
+                },
+                "defense": {
+                    "legend": [
+                        "+27% to Defense from Merits",
+                        "+11% to Defense from Education",
+                        "-25% to Defense from Drugs"
+                    ],
+                    "value": 13
+                },
+                "damage": {
+                    "legend": [
+                        "+2% to Damage from Property",
+                        "+1% to Damage from Education"
+                    ],
+                    "value": 3
+                }
+            },
+            "chain": 0,
+            "lastAction": 0
+        },
+        "defenderUser": {
+            "userID": "554197",
+            "playername": "SPILSIE",
+            "gender": "Male",
+            "factionID": "46208",
+            "life": 2612,
+            "maxlife": "2612",
+            "corp": "17078",
+            "currentarea": "1",
+            "level": "50",
+            "honorID": "640",
+            "marriedto": "558960"
+        },
+        "attackerItems": {
+            "1": {
+                "item": [
+                    {
+                        "armouryID": "8536572953",
+                        "armoryID": "8536572953",
+                        "userID": "2187764",
+                        "itemID": "398",
+                        "type": "Item",
+                        "equiped": "1",
+                        "ammo": "8",
+                        "type2": "Primary",
+                        "dmg": "74.17",
+                        "damage": "74.17",
+                        "ID": "398",
+                        "arm": "0",
+                        "accuracy": "55.26",
+                        "acc": 55.2645,
+                        "equipSlot": "1",
+                        "name": "SIG 552",
+                        "maxammo": "30",
+                        "ammotype": "5",
+                        "rofmin": "4",
+                        "rofmax": "7",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "4",
+                        "upgrades": "",
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "quality": 208.75,
+                        "rarity": "1",
+                        "currentBonuses": {
+                            "79": {
+                                "desc": "17% increased hit chance for every miss",
+                                "title": "Focus",
+                                "hoverover": "<b>Focus</b><br/>17% increased hit chance for every miss",
+                                "icon": "focus"
+                            }
+                        }
+                    }
+                ]
+            },
+            "2": {
+                "item": [
+                    {
+                        "armouryID": "8300384962",
+                        "armoryID": "8300384962",
+                        "userID": "2187764",
+                        "itemID": "244",
+                        "type": "Item",
+                        "equiped": "2",
+                        "ammo": "3",
+                        "type2": "Secondary",
+                        "dmg": "17.16",
+                        "damage": "17.16",
+                        "ID": "244",
+                        "arm": "0",
+                        "accuracy": "41.55",
+                        "acc": 41.548,
+                        "equipSlot": "2",
+                        "name": "Blowgun",
+                        "maxammo": "1",
+                        "ammotype": "16",
+                        "rofmin": "1",
+                        "rofmax": "1",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "9",
+                        "upgrades": "",
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 1,
+                        "quality": 94.14,
+                        "currentBonuses": {
+                            "32": {
+                                "desc": "93% chance to Poison opponent causing 950% damage over 19 turns",
+                                "title": "Poison",
+                                "hoverover": "<b>Poison</b><br/>93% chance to Poison opponent causing 950% damage over 19 turns",
+                                "icon": "poisoned"
+                            }
+                        }
+                    }
+                ]
+            },
+            "3": {
+                "item": [
+                    {
+                        "armouryID": "8009502674",
+                        "armoryID": "8009502674",
+                        "userID": "2187764",
+                        "itemID": "146",
+                        "type": "Item",
+                        "equiped": "3",
+                        "ammo": "0",
+                        "type2": "Melee",
+                        "dmg": "71.33",
+                        "damage": "71.33",
+                        "ID": "146",
+                        "arm": "0",
+                        "accuracy": "53.94",
+                        "acc": 53.9405,
+                        "equipSlot": "3",
+                        "name": "Yasukuni Sword",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "10",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "quality": 225.48,
+                        "rarity": "1",
+                        "currentBonuses": {
+                            "21": {
+                                "desc": "24% increased money mugged on final hit",
+                                "title": "Plunder",
+                                "hoverover": "<b>Plunder</b><br/>24% increased money mugged on final hit",
+                                "icon": "plunder"
+                            }
+                        }
+                    }
+                ]
+            },
+            "4": {
+                "item": [
+                    {
+                        "armouryID": "8297673705",
+                        "armoryID": "8297673705",
+                        "userID": "2187764",
+                        "itemID": "666",
+                        "type": "Item",
+                        "equiped": "4",
+                        "ammo": "0",
+                        "type2": "Defensive",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "666",
+                        "arm": "47.54",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "4",
+                        "name": "Assault Body",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "[\"B3\"]",
+                        "changedSlotsMap": "[\"L4\"]",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "rarity": "1",
+                        "quality": 30.83,
+                        "currentBonuses": {
+                            "17": {
+                                "desc": "21% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "title": "Impenetrable",
+                                "hoverover": "<b>Impenetrable</b><br/>21% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "icon": "bullets-protection"
+                            }
+                        }
+                    }
+                ]
+            },
+            "5": {
+                "item": [
+                    {
+                        "armouryID": "8871194059",
+                        "armoryID": "8871194059",
+                        "userID": "2187764",
+                        "itemID": "465",
+                        "type": "Item",
+                        "equiped": "5",
+                        "ammo": "0",
+                        "type2": "Temporary",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "465",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "5",
+                        "name": "Serotonin",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "10",
+                        "slotsMap": "",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "7",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "6": {
+                "item": [
+                    {
+                        "armouryID": "8322757130",
+                        "armoryID": "8322757130",
+                        "userID": "2187764",
+                        "itemID": "665",
+                        "type": "Item",
+                        "equiped": "6",
+                        "ammo": "0",
+                        "type2": "Defensive",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "665",
+                        "arm": "47.63",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "6",
+                        "name": "Assault Helmet",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "[\"H3\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "head-top-mask",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "rarity": "1",
+                        "quality": 32.62,
+                        "currentBonuses": {
+                            "17": {
+                                "desc": "22% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "title": "Impenetrable",
+                                "hoverover": "<b>Impenetrable</b><br/>22% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "icon": "bullets-protection"
+                            }
+                        }
+                    }
+                ]
+            },
+            "7": {
+                "item": [
+                    {
+                        "armouryID": "8144655773",
+                        "armoryID": "8144655773",
+                        "userID": "2187764",
+                        "itemID": "667",
+                        "type": "Item",
+                        "equiped": "7",
+                        "ammo": "0",
+                        "type2": "Defensive",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "667",
+                        "arm": "47.16",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "7",
+                        "name": "Assault Pants",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "[\"L3\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "rarity": "1",
+                        "quality": 23.1,
+                        "currentBonuses": {
+                            "17": {
+                                "desc": "22% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "title": "Impenetrable",
+                                "hoverover": "<b>Impenetrable</b><br/>22% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "icon": "bullets-protection"
+                            }
+                        }
+                    }
+                ]
+            },
+            "8": {
+                "item": [
+                    {
+                        "armouryID": "8329226998",
+                        "armoryID": "8329226998",
+                        "userID": "2187764",
+                        "itemID": "668",
+                        "type": "Item",
+                        "equiped": "8",
+                        "ammo": "0",
+                        "type2": "Defensive",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "668",
+                        "arm": "46.42",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "8",
+                        "name": "Assault Boots",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "[\"F3\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "rarity": "1",
+                        "quality": 8.49,
+                        "currentBonuses": {
+                            "17": {
+                                "desc": "20% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "title": "Impenetrable",
+                                "hoverover": "<b>Impenetrable</b><br/>20% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "icon": "bullets-protection"
+                            }
+                        }
+                    }
+                ]
+            },
+            "9": {
+                "item": [
+                    {
+                        "armouryID": "8143520339",
+                        "armoryID": "8143520339",
+                        "userID": "2187764",
+                        "itemID": "669",
+                        "type": "Item",
+                        "equiped": "9",
+                        "ammo": "0",
+                        "type2": "Defensive",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "669",
+                        "arm": "48.14",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "9",
+                        "name": "Assault Gloves",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": 1,
+                        "slotsMap": "[\"D3\"]",
+                        "changedSlotsMap": "[\"D2\"]",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0,
+                        "rarity": "1",
+                        "quality": 42.83,
+                        "currentBonuses": {
+                            "17": {
+                                "desc": "22% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "title": "Impenetrable",
+                                "hoverover": "<b>Impenetrable</b><br/>22% decreased incoming bullet damage\n\n<br/><i>+10% full set bonus</i>",
+                                "icon": "bullets-protection"
+                            }
+                        }
+                    }
+                ]
+            },
+            "10": {
+                "item": [
+                    {
+                        "armouryID": "7916078919",
+                        "armoryID": "7916078919",
+                        "userID": "2187764",
+                        "itemID": "569",
+                        "type": "Item",
+                        "equiped": 10,
+                        "ammo": "0",
+                        "type2": "Enhancer",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "569",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Balaclava",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "1",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"H1\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "head-mask-2",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "11": {
+                "item": [
+                    {
+                        "armouryID": "7955679488",
+                        "armoryID": "7955679488",
+                        "userID": "2187764",
+                        "itemID": "606",
+                        "type": "",
+                        "equiped": 11,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "606",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Santa Boots",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"F5\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "santa-boots-mask",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "12": {
+                "item": [
+                    {
+                        "armouryID": "8775470976",
+                        "armoryID": "8775470976",
+                        "userID": "2187764",
+                        "itemID": "607",
+                        "type": "Item",
+                        "equiped": 12,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "607",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Santa Gloves",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"D4\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "santa-gloves-mask",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "13": {
+                "item": [
+                    {
+                        "armouryID": "8389324975",
+                        "armoryID": "8389324975",
+                        "userID": "2187764",
+                        "itemID": "608",
+                        "type": "Item",
+                        "equiped": 13,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "608",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Santa Hat",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"H4\",\"H5\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "head-top-mask",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "14": {
+                "item": [
+                    {
+                        "armouryID": "6358592521",
+                        "armoryID": "6358592521",
+                        "userID": "2187764",
+                        "itemID": "609",
+                        "type": "Item",
+                        "equiped": 14,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "609",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Santa Jacket",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"B4\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "15": {
+                "item": [
+                    {
+                        "armouryID": "7940178634",
+                        "armoryID": "7940178634",
+                        "userID": "2187764",
+                        "itemID": "610",
+                        "type": "Item",
+                        "equiped": 15,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "610",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Santa Trousers",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"L4\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "16": {
+                "item": [
+                    {
+                        "armouryID": "8327906746",
+                        "armoryID": "8327906746",
+                        "userID": "2187764",
+                        "itemID": "810",
+                        "type": "Item",
+                        "equiped": 16,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "810",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Moustache Man Mask",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "1",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"N3\",\"M3\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "17": {
+                "item": [
+                    {
+                        "armouryID": "8281171858",
+                        "armoryID": "8281171858",
+                        "userID": "2187764",
+                        "itemID": "983",
+                        "type": "Item",
+                        "equiped": 17,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "983",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Bandit Mask",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"E3\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "18": {
+                "item": [
+                    {
+                        "armouryID": "7687517332",
+                        "armoryID": "7687517332",
+                        "userID": "2187764",
+                        "itemID": "989",
+                        "type": "Item",
+                        "equiped": 18,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "989",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Fur Scarf",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"P3\"]",
+                        "changedSlotsMap": "[\"B6\"]",
+                        "slotsMapMask": "",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "19": {
+                "item": [
+                    {
+                        "armouryID": "6859841755",
+                        "armoryID": "6859841755",
+                        "userID": "2187764",
+                        "itemID": "1021",
+                        "type": "Item",
+                        "equiped": 19,
+                        "ammo": "0",
+                        "type2": "Clothing",
+                        "dmg": "0",
+                        "damage": "0",
+                        "ID": "1021",
+                        "arm": "0",
+                        "accuracy": "0",
+                        "acc": "0",
+                        "equipSlot": "10",
+                        "name": "Sandals",
+                        "maxammo": "0",
+                        "ammotype": "0",
+                        "rofmin": "0",
+                        "rofmax": "0",
+                        "scary": "0",
+                        "isDual": "0",
+                        "isMask": "0",
+                        "stealthLevel": "0",
+                        "slotsMap": "[\"F4\"]",
+                        "changedSlotsMap": "",
+                        "slotsMapMask": "sandals-mask",
+                        "slotsMapMaskHair": "",
+                        "weptype": "0",
+                        "upgrades": null,
+                        "armourNotCover": "",
+                        "slotsMapBackground": "",
+                        "roffixed": 0
+                    }
+                ]
+            },
+            "999": {
+                "item": [
+                    {
+                        "type": "Weapon",
+                        "name": "Fists",
+                        "dmg": "0.00",
+                        "accuracy": "50.00",
+                        "acc": 50,
+                        "ID": 999,
+                        "stealthLevel": 1
+                    }
+                ]
+            },
+            "1000": {
+                "item": [
+                    {
+                        "type": "Weapon",
+                        "name": "Kick",
+                        "dmg": "0.00",
+                        "accuracy": "40.00",
+                        "acc": 40,
+                        "ID": 1000,
+                        "stealthLevel": 1
+                    }
+                ]
+            }
+        },
+        "attackerAmmoStatus": { "1": "30/30 (2)", "2": "1/1 (2)" },
+        "defenderItems": { "999": [] },
+        "additionalInfo": {
+            "defender": { "model": "attack_model_play_time.png" }
+        },
+        "viewStyle": "nonAttack",
+        "usersLife": {
+            "attacker": {
+                "currentLife": "2292",
+                "maxLife": "7275",
+                "lifeBar": 31
+            },
+            "defender": {
+                "currentLife": "2612",
+                "maxLife": "2612",
+                "lifeBar": 100
+            }
+        },
+        "currentTemporaryEffects": [],
+        "attackStatus": "notStarted",
+        "loadtime": [
+            "Turn time: 0.047332048416138",
+            "Total time: 0.072817087173462"
+        ],
+        "enablePoll": true
+    },
+    "viewStyle": "nonAttack",
+    "rfcv": null,
+    "isAjaxRequest": true
+}

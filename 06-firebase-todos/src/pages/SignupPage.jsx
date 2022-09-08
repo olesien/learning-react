@@ -1,3 +1,4 @@
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useRef, useState } from "react";
 import {
     Container,
@@ -11,7 +12,10 @@ import {
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 
+import { projectStorage } from "../firebase";
+
 const SignupPage = () => {
+    const { setDisplayNameAndPhotoUrl } = useAuthContext();
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
@@ -19,6 +23,26 @@ const SignupPage = () => {
     const [loading, setLoading] = useState(false);
     const { signup } = useAuthContext();
     const navigate = useNavigate();
+    const [thumbnail, setThumbnail] = useState(null);
+    const [thumbnailError, setThumbnailError] = useState(null);
+
+    const handleFileChange = (e) => {
+        setThumbnail(null);
+        let selected = e.target.files[0];
+        console.log(selected);
+        if (!selected) {
+            setThumbnailError("Please select a file");
+        }
+        if (!selected.type.includes("image")) {
+            setThumbnailError("Selected file must be an image");
+        }
+        if (selected.size > 100000) {
+            return setThumbnailError("Image file size must be less than 100kb");
+        }
+        setThumbnailError(null);
+        setThumbnail(selected);
+        console.log("thumbnail updated");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,9 +57,41 @@ const SignupPage = () => {
         // try to sign up the user with the specified credentials
         try {
             setLoading(true);
-            await signup(emailRef.current.value, passwordRef.current.value);
-            navigate("/");
+            const res = await signup(
+                emailRef.current.value,
+                passwordRef.current.value
+            );
+            if (!res) {
+                return alert("help");
+            }
+
+            if (thumbnail) {
+                let photoURL = "";
+                console.log(thumbnail);
+                //set new thumbnail
+                const uploadPath = `thumnbnails/${res.user.uid}/${thumbnail.name}`;
+                console.log(uploadPath);
+                console.log("before");
+                const storageRef = ref(projectStorage, uploadPath);
+                console.log("after");
+                console.log(storageRef);
+                const img = await uploadBytes(storageRef, thumbnail);
+                console.log(img);
+                console.log(img);
+
+                // const img = await projectStorage
+                //     .ref(uploadPath)
+                //     .put(thumbnail);
+                const fullPath = img.metadata.fullPath;
+                photoURL = await getDownloadURL(storageRef);
+                console.log(photoURL);
+                if (photoURL) {
+                    await setDisplayNameAndPhotoUrl("", photoURL);
+                    navigate("/");
+                }
+            }
         } catch (err) {
+            console.log(err);
             setError(err.message);
             setLoading(false);
         }
@@ -80,6 +136,19 @@ const SignupPage = () => {
                                     <Form.Control
                                         type="password"
                                         ref={passwordConfirmRef}
+                                        required
+                                    />
+                                </Form.Group>
+                                {thumbnailError && (
+                                    <div className="error">
+                                        {thumbnailError}
+                                    </div>
+                                )}
+                                <Form.Group id="profile-img" className="mb-3">
+                                    <Form.Label>Profile Thumbnail</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        onChange={handleFileChange}
                                         required
                                     />
                                 </Form.Group>

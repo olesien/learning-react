@@ -36,10 +36,17 @@ const AuthContextProvider = ({ children }) => {
         return sendPasswordResetEmail(auth, email);
     };
 
-    const updateName = async (displayName) => {
-        return updateProfile(auth.currentUser, {
-            displayName,
-        });
+    const setDisplayNameAndPhotoUrl = async (displayName, photoURL) => {
+        if (photoURL.length > 1) {
+            return updateProfile(auth.currentUser, {
+                displayName,
+                photoURL,
+            });
+        } else {
+            return updateProfile(auth.currentUser, {
+                displayName,
+            });
+        }
     };
 
     const updateMail = async (mail) => {
@@ -64,7 +71,7 @@ const AuthContextProvider = ({ children }) => {
         logout,
         signup,
         resetPassword,
-        updateName,
+        setDisplayNameAndPhotoUrl,
         updateMail,
         changePassword,
         user,

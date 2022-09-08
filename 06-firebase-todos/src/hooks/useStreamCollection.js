@@ -14,7 +14,7 @@ const useStreamCollection = (col, ...queryConstraints) => {
 
         // subscribe to changes in collection
         const unsubscribe = onSnapshot(queryRef, (snapshot) => {
-            // got me a new snapshot 🤳🏻
+            // got me a new snapshot
             const docs = snapshot.docs.map((doc) => {
                 return {
                     id: doc.id,
