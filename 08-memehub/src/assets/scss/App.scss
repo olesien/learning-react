@@ -1,0 +1,40 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'react-toastify/scss/main';
+@import 'toastify';
+
+#App {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	position: relative;
+}
+
+#initial-loader {
+	// background-color: #3f7bc2;
+	display: flex;
+	min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
+
+.center-y {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.fetching-spinner {
+	position: absolute;
+	right: 80px;
+	top: 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 0.5em;
+}
+
+.logo-wrapper {
+	display: flex;
+	margin-bottom: 3rem;
+}
