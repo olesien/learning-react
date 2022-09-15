@@ -1,135 +1,154 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from "react";
 import {
-	createUserWithEmailAndPassword,
-	sendPasswordResetEmail,
-	signInWithEmailAndPassword,
-	signOut,
-	onAuthStateChanged,
-	updateEmail,
-	updatePassword,
-	updateProfile,
-} from 'firebase/auth'
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
-import { auth, storage } from '../firebase'
-import PacmanLoader from 'react-spinners/PacmanLoader'
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    updateEmail,
+    updatePassword,
+    updateProfile,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { auth, storage, db } from "../firebase";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 const useAuthContext = () => {
-	return useContext(AuthContext)
-}
+    return useContext(AuthContext);
+};
 
 const AuthContextProvider = ({ children }) => {
-	const [currentUser, setCurrentUser] = useState(null)
-	const [userName, setUserName] = useState(null)
-	const [userEmail, setUserEmail] = useState(null)
-	const [userPhotoUrl, setUserPhotoUrl] = useState(null)
-	const [loading, setLoading] = useState(true)
+    const [currentUser, setCurrentUser] = useState(null);
+    const [userName, setUserName] = useState(null);
+    const [userEmail, setUserEmail] = useState(null);
+    const [userPhotoUrl, setUserPhotoUrl] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-	const signup = (email, password) => {
-		return createUserWithEmailAndPassword(auth, email, password)
-	}
+    const signup = async (email, password, name, photo) => {
+        await createUserWithEmailAndPassword(auth, email, password);
 
-	const login = (email, password) => {
-		return signInWithEmailAndPassword(auth, email, password)
-	}
+        // set display name and upload photo for the newly created user
+        await setDisplayNameAndPhoto(name, photo);
 
-	const logout = () => {
-		return signOut(auth)
-	}
+        // reload user
+        await reloadUser();
 
-	const reloadUser = async () => {
-		await auth.currentUser.reload()
-		setCurrentUser(auth.currentUser)
-		setUserName(auth.currentUser.displayName)
-		setUserEmail(auth.currentUser.email)
-		setUserPhotoUrl(auth.currentUser.photoURL)
-		return true
-	}
+        //create user doc
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        await setDoc(docRef, {
+            name,
+            email,
+            photoURL: auth.currentUser.photoURL,
+        });
 
-	const resetPassword = (email) => {
-		return sendPasswordResetEmail(auth, email)
-	}
+        return;
+    };
 
-	const setEmail = (email) => {
-		return updateEmail(currentUser, email)
-	}
+    const login = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
+    };
 
-	const setPassword = (newPassword) => {
-		return updatePassword(currentUser, newPassword)
-	}
+    const logout = () => {
+        return signOut(auth);
+    };
 
-	const setDisplayNameAndPhoto = async (displayName, photo) => {
-		let photoURL = auth.currentUser.photoURL
+    const reloadUser = async () => {
+        await auth.currentUser.reload();
+        setCurrentUser(auth.currentUser);
+        setUserName(auth.currentUser.displayName);
+        setUserEmail(auth.currentUser.email);
+        setUserPhotoUrl(auth.currentUser.photoURL);
+        return true;
+    };
 
-		if (photo) {
-			// create a reference to upload the file to
-			const fileRef = ref(storage, `photos/${auth.currentUser.email}/${photo.name}`)
+    const resetPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
+    };
 
-			try {
-				// upload photo to fileRef
-				const uploadResult = await uploadBytes(fileRef, photo)
+    const setEmail = (email) => {
+        return updateEmail(currentUser, email);
+    };
 
-				// get download url to uploaded file
-				photoURL = await getDownloadURL(uploadResult.ref)
+    const setPassword = (newPassword) => {
+        return updatePassword(currentUser, newPassword);
+    };
 
-				console.log("Photo uploaded successfully, download url is:", photoURL)
+    const setDisplayNameAndPhoto = async (displayName, photo) => {
+        let photoURL = auth.currentUser.photoURL;
 
-			} catch (e) {
-				console.log("Upload failed", e)
-				setError("Photo failed to upload!")
-			}
-		}
+        if (photo) {
+            // create a reference to upload the file to
+            const fileRef = ref(
+                storage,
+                `photos/${auth.currentUser.email}/${photo.name}`
+            );
 
-		return updateProfile(auth.currentUser, {
-			displayName,
-			photoURL,
-		})
-	}
+            try {
+                // upload photo to fileRef
+                const uploadResult = await uploadBytes(fileRef, photo);
 
-	useEffect(() => {
-		// listen for auth-state changes
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			setCurrentUser(user)
-			setUserName(user?.displayName)
-			setUserEmail(user?.email)
-			setUserPhotoUrl(user?.photoURL)
-			setLoading(false)
-		})
+                // get download url to uploaded file
+                photoURL = await getDownloadURL(uploadResult.ref);
 
-		return unsubscribe
-	}, [])
+                console.log(
+                    "Photo uploaded successfully, download url is:",
+                    photoURL
+                );
+            } catch (e) {
+                console.log("Upload failed", e);
+                setError("Photo failed to upload!");
+            }
+        }
 
-	const contextValues = {
-		// here be everything the children needs/should be able to use
-		currentUser,
-		login,
-		logout,
-		signup,
-		reloadUser,
-		resetPassword,
-		setDisplayNameAndPhoto,
-		setEmail,
-		setPassword,
-		userName,
-		userEmail,
-		userPhotoUrl,
-	}
+        return updateProfile(auth.currentUser, {
+            displayName,
+            photoURL,
+        });
+    };
 
-	return (
-		<AuthContext.Provider value={contextValues}>
-			{loading ? (
-				<div id="initial-loader">
-					<PacmanLoader color={'#888'} size={50} />
-				</div>
-			) : (
-				children
-			)}
-		</AuthContext.Provider>
-	)
-}
+    useEffect(() => {
+        // listen for auth-state changes
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user);
+            setUserName(user?.displayName);
+            setUserEmail(user?.email);
+            setUserPhotoUrl(user?.photoURL);
+            setLoading(false);
+        });
 
-export {
-	AuthContextProvider as default,
-	useAuthContext,
-}
+        return unsubscribe;
+    }, []);
+
+    const contextValues = {
+        // here be everything the children needs/should be able to use
+        currentUser,
+        login,
+        logout,
+        signup,
+        reloadUser,
+        resetPassword,
+        setDisplayNameAndPhoto,
+        setEmail,
+        setPassword,
+        userName,
+        userEmail,
+        userPhotoUrl,
+    };
+
+    return (
+        <AuthContext.Provider value={contextValues}>
+            {loading ? (
+                <div id="initial-loader">
+                    <PacmanLoader color={"#888"} size={50} />
+                </div>
+            ) : (
+                children
+            )}
+        </AuthContext.Provider>
+    );
+};
+
+export { AuthContextProvider as default, useAuthContext };
