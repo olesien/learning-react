@@ -24,7 +24,7 @@ const TodosPage = ({ initialTodos }) => {
             <TodoCounter
                 count={todos.filter((todo) => !todo.completed).length}
             />
-        </>
+        </> 
     );
 };
 
